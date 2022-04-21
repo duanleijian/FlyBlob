@@ -1,0 +1,102 @@
+@import '@/common/style.scss';
+.recauthor {
+    &-list {
+        padding-bottom: 30px;
+        margin: 40px auto;
+        width: 900px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        &_item {
+            cursor: pointer;
+            margin-top: 80px;            
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            height: 300px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px 2px rgba(0, 0%, 0%, 0.1);
+            &:hover .recauthor-list_item__avatar {
+                transform: scale(1.3);
+            }            
+            &__avatar {
+                margin-top: -50px;                                                
+                margin-left: auto;
+                margin-right: auto;
+                width: 130px;
+                height: 130px;
+                display: flex;                
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: #fff;
+                border-radius: 50%;
+                transition: transform 0.3s ease-in-out;
+                img {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                }                
+            }
+            
+            &__info {
+                &___name {
+                    margin-top: 20px;    
+                    font-size: 21px; 
+                    font-weight: bold;                                   
+                    text-align: center;
+                }
+                &___introduct {
+                    margin-top: 15px;
+                    font-size: 14px;
+                    text-align: center;
+                    color: $theme-blue-color1;
+                }
+            }
+            &__articles {
+                margin-top: 50px;
+                display: flex;
+                flex-direction: column;                
+                &___title {
+                    padding: 0 10px;
+                    box-sizing: border-box;
+                    font-size: 13px;
+                    color: $theme-border-color5;
+                    &____text {
+                        display: inline-block;
+                        padding: 0 6px;                        
+                        font-size: 15px;
+                    } 
+                    &::before {
+                        content: '';
+                        transform: translateY(-5px);                        
+                        display: inline-block;
+                        width: 20%;
+                        height: 1px;
+                        background-color: $theme-border-color5;
+                    }
+                    &::after {
+                        content: '';                        
+                        transform: translateY(-5px);                        
+                        display: inline-block;
+                        width: 51%;
+                        height: 1px;
+                        background-color: $theme-border-color5;
+                    }
+                }
+                &___tip {
+                    cursor: pointer;
+                    margin-top: 10px;
+                    text-align: center;
+                    font-size: 14px;
+                    color: $theme-blue-color2;
+                    &:hover {
+                        color: $theme-color;
+                    }
+                }
+            }
+        }        
+    }
+}

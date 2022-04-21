@@ -1,0 +1,8 @@
+.person-info {    
+    margin: 30px auto;
+    width: 1100px;
+    &_cont {
+        display: flex;
+        flex-direction: row;
+    }
+}

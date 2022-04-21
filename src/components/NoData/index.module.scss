@@ -1,0 +1,15 @@
+.no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &_img {
+        width: 100px;
+        height: 100px;
+    }
+    &_tip {
+        margin-top: 10px;
+        font-size: 15px;
+        color: #999;
+    }
+}

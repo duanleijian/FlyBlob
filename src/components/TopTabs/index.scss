@@ -1,0 +1,27 @@
+@import '../../common/style.scss';
+.top-tabs {
+    height: 100%;
+    &_list {
+        display: flex;
+        flex-direction: row;
+                
+    }
+    &_item {
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        height: 100%;
+        color: #999;
+        font-size: 15px;          
+    }
+    &_item:hover {
+        background-color: #e7e7e7;        
+    }
+    &_item_active {
+        color: $theme-color !important;
+    }
+}

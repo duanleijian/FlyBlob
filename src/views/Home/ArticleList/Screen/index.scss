@@ -1,0 +1,34 @@
+@import '@/common/style.scss';
+.screen-cond {    
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;    
+    &_item {
+        position: relative; 
+        cursor: pointer;       
+        padding: 18px 30px;
+        box-sizing: border-box;
+        font-size: 15px;
+        color: #999;
+        &_mask {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            transform: translateX(-50%);
+            transition: width 0.2s ease-in-out 0s;
+            background-color: $theme-color;
+        }
+        &:hover > &_mask {
+            width: 100% !important; 
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    }
+    
+    &_item__active {
+        color: $theme-color !important;
+    }    
+}

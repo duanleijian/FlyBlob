@@ -1,0 +1,84 @@
+@import '@/common/style.scss';
+.modal {
+    position: fixed;
+    display: none;    
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 999999;
+    &-mask {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    &-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;                
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        width: 500px;        
+        box-sizing: border-box;        
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 2px rgba(0, 0%, 0%, 0.1);
+        &_title {
+            position: relative;
+            padding: 0 0 15px 0;                
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-size: 16px;
+            &__close {
+                cursor: pointer;
+                position: absolute;
+                right: -20px;
+                top: -20px;
+                width: 40px;
+                height: 40px;
+                text-align: center;                
+                line-height: 40px;
+                span {
+                    color: $theme-border-color3;
+                    font-size: 16px;
+                }
+            }
+        }
+        &_cont {            
+            font-size: 18px;
+            min-height: 100px;            
+        }
+        &_footer {
+            margin-top: 30px;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            &__ok {
+                cursor: pointer;
+                margin-left: 30px;
+                padding: 10px 15px;
+                box-sizing: border-box;                
+                color: #fff;
+                background-color: $theme-color;
+                border-radius: 4px;
+            }
+            &__cancel {
+                cursor: pointer;
+                padding: 10px 15px;
+                box-sizing: border-box;
+                color: $theme-border-color3;
+                border: 1px solid $theme-border-color3;
+                border-radius: 4px;
+            }
+        }
+    }
+}
+.modal-open {
+    display: block !important; 
+}

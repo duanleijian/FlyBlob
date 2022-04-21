@@ -1,0 +1,47 @@
+@import '@/common/style.scss';
+.myarticle-list {
+    padding: 0 20px;
+    box-sizing: border-box;
+    padding-bottom: 20px;        
+    &_item {
+        padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid $theme-border-color4;
+        &__title {
+            padding-top: 10px;                        
+            box-sizing: border-box;
+            font-size: 17px;
+            font-weight: bold;
+            color: $theme-black-color1;
+        }
+        &__content {
+            padding-top: 15px;            
+            box-sizing: border-box;                                    
+            color: $theme-gray-color1;
+        }
+        &__info {
+            display: flex;
+            padding-top: 15px;                        
+            box-sizing: border-box;
+            flex-direction: row;
+            align-items: center;
+            &___icon { 
+                cursor: pointer;     
+                margin-left: 15px;          
+                span:first-child {
+                    font-size: 16px;                        
+                    color: $theme-blue-color1;
+                }
+                span:last-child {                    
+                    margin-left: 5px;
+                    font-size: 16px;
+                    color: $theme-blue-color1;
+                }
+            }
+            &___icon:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}

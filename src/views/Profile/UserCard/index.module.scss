@@ -1,0 +1,86 @@
+@import '@/common/style.scss';
+.user-card {
+    padding: 20px 20px 0 20px;
+    box-sizing: border-box;    
+    width: 800px;    
+    border-radius: 10px;
+    background-color: #fff;
+    &_avatar {
+        &__img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+        }
+    }
+    &_info {        
+        margin-left: 15px;
+        padding: 5px 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; 
+        height: 90px;       
+        &__name {
+            color: #333;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        &__count {
+            display: flex;
+            flex-direction: row;
+            &___item {
+                padding: 0 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                span:first-child {
+                    font-size: 13px;
+                    color: $theme-font-color;                    
+                }
+                span:last-child {
+                    margin-top: 5px;
+                    font-size: 14px;
+                    color: $theme-gray-color3;
+                }
+            }
+            &___item:first-child {
+                padding-left: 0;
+            }
+        }
+    }
+    &_profile {        
+        margin-top: 20px;
+        cursor: pointer;
+        padding: 15px 10px 15px 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid $theme-border-color1;
+        &__left {
+            span:first-child {
+                font-size: 18px;
+                color: $theme-color;
+            }
+            span:last-child {
+                margin-left: 5px;
+                font-size: 15px;
+                color: $theme-gray-color2;
+            }
+        }
+        &__right {            
+            span:first-child {
+                font-size: 15px;
+                color: $theme-gray-color2;
+            }
+            span:last-child {
+                margin-left: 5px;
+                font-size: 15px;
+                color: $theme-gray-color2;
+            }
+        }
+    }    
+}

@@ -1,0 +1,35 @@
+@import '@/common/style.scss';
+.form-input {    
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;            
+    align-items: center;
+    // width: 200px;
+    height: 35px;    
+    &_label {
+        display: flex;        
+        flex-direction: row;
+        align-items: center;
+        width: 30%;
+        height: 100%;
+        color: $theme-back-color;
+        font-size: 15px;        
+        color: $theme-black-color1;
+    }
+    &_value {
+        padding-left: 10px;                
+        box-sizing: border-box;
+        width: 70%;
+        height: 100%;
+        background-color: $theme-back-color2;
+        border: 1px solid $theme-border-color5;
+        border-radius: 4px;
+    }
+    &_value::placeholder {
+        color: #999;
+    }
+    &_value__focus {
+        border-color: $theme-color;
+        background-color: #fff;
+    }
+}

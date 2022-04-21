@@ -1,0 +1,145 @@
+@import '@/common/style.scss';
+.query {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    height: auto;
+    border-radius: 10px;
+    background-color: #fff;
+    &-nomore {
+        padding: 20px 0;
+        text-align: center;        
+        font-size: 15px;
+        color: $theme-gray-color1;
+    }
+    &-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;        
+        border-bottom: 1px solid $theme-border-color2;
+        &_list {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            &__item {
+                position: relative;
+                cursor: pointer;
+                padding: 10px 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                color: #909090;
+                font-size: 15px;
+                &___active {
+                    background-color: $theme-hover-color1 !important;
+                }
+                &::after {
+                    position: absolute;
+                    content: '';
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: 0;
+                    width: 1px;
+                    height: 40%;
+                    background-color: #eee;
+                }
+                // &:hover {
+                //     color: $theme-color !important;
+                // }
+            }
+            &__item:last-child::after {
+                width: 0;
+            }
+        }
+    }
+    &-list {        
+        display: flex;        
+        flex-direction: column;                
+        &_item {
+            cursor: pointer;
+            padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid $theme-border-color2;
+            &:hover {
+                background-color: $theme-hover-color1 !important;
+            }            
+            &__top {
+                padding: 7px 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                color: #b2bac2;
+                &___info {
+                    margin-right: 10px;
+                    position: relative;                    
+                    &:after{
+                        position: absolute;
+                        right: -5px;
+                        top: 50%;
+                        content: '';
+                        width: 2px;
+                        height: 2px;
+                        border-radius: 50%;
+                        background-color: #b2bac2;
+                    }
+                    &:last-child::after {
+                        display: none;
+                    }
+                }                                                
+            }
+            &__center {
+                &___title {
+                    padding-top: 10px;
+                    padding-left: 20px;                        
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: $theme-black-color1;
+                }
+                &___content {
+                    padding-top: 20px;
+                    padding-left: 20px;                        
+                    color: $theme-gray-color1;
+                }
+            }
+            &__bottom {
+                margin-top: 15px;
+                padding-left: 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                &___icon {
+                    cursor: pointer;
+                    margin-left: -1px;
+                    width: 80px;
+                    height: 30px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid #eee;                    
+                    color: #b2bac2;
+                    font-size: 14px;
+                    .iconfont {
+                        margin-right: 5px;
+                        font-size: 15px;                        
+                        color: #b2bac2;
+                    }
+                }
+                &___icon:first-child {
+                    border-radius: 100px 0 0  100px;
+                }
+                &___icon:last-child {
+                    border-radius: 0 100px 100px 0;
+                }
+            }
+        }
+        
+    }
+    
+}

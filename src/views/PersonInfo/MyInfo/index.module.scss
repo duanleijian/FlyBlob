@@ -1,0 +1,18 @@
+@import '@/common/style.scss';
+.my-info {
+    &_form {        
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        &__submit {
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: 84%;                                   
+            padding: 10px 15px;
+            box-sizing: border-box;
+            color: #fff;
+            border-radius: 4px;
+            background-color: $theme-color;
+        }        
+    }
+}

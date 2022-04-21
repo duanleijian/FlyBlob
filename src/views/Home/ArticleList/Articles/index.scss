@@ -1,0 +1,39 @@
+@import '@/common/style.scss';
+.articles {
+    display: flex;
+    flex-direction: column;
+    &-item {
+        cursor: pointer;
+        padding: 10px 15px;
+        box-sizing: border-box;        
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-bottom: 1px solid $theme-border-color2;
+        transition: background-color 0.3s ease-in-out 0s;
+        background-color: #fff;
+        &:hover {
+            background-color: #f0f0f0 !important;
+        }
+        &:last-child {
+            border-bottom: none;
+        }
+        &_num {
+            display: flex;            
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            height: 25px;           
+            font-size: 12px;
+            color: #fff;                        
+            border-radius: 4px;
+        }
+        &_title {
+            margin-left: 10px;
+            width: 260px;
+            font-size: 15px;
+            color: $theme-black-color1;
+        }
+    }
+}

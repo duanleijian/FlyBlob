@@ -1,0 +1,36 @@
+@import '../../common/style.scss';
+$search-icon-height: 50px;
+.search {
+    margin-left: 150px;
+    display: flex;
+    flex-direction: row;    
+    width: 250px;
+    height: 35px;
+    border-radius: 100px;
+    background-color: #f2f3f5;
+    transition: width 0.3s ease-in-out 0s;    
+    &-input {
+        text-indent: 15px;
+        color: #333;
+        width: calc(100% - $search-icon-height);
+        height: 100%;
+        background-color: transparent;
+    }
+    &-icon {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: $search-icon-height;
+        height: 100%;
+        .iconfont {
+            font-size: 23px;
+            color: #999;
+        }
+    }
+}
+.search-focus {
+    background-color: #fff !important;
+    border: 1px solid $theme-color !important;
+}

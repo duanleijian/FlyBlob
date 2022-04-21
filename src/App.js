@@ -1,25 +1,23 @@
-import logo from './logo.svg';
+import React, { Suspense } from 'react';
+import { BrowserRouter } from 'react-router-dom'
+import { connect } from 'dva'
 import './App.css';
+import './common/iconfont.css'
+import RouterNavigate from '@/router/index.jsx'
+import NotFound from '@/views/NotFound';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App(props) {
+	let { dispatch, keyword } = props	
+	return (
+		<div className="App">
+			<BrowserRouter>
+				<Suspense fallback={<div></div>}>
+					<RouterNavigate />
+				</Suspense>
+			</BrowserRouter>
+		</div>
+	);
 }
 
-export default App;
+export default connect(({ keyword }) => ({ keyword }))(App);
+// export default App;

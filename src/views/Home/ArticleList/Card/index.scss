@@ -1,0 +1,43 @@
+@import '@/common/style.scss';
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: auto;
+    box-sizing: border-box;    
+    height: auto;
+    border-radius: 10px;    
+    background-color: #fff;
+    overflow: hidden;
+    &-title {
+        padding: 15px 10px;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 15px;
+        font-weight: bold;
+        color: #333;
+        // border-radius: 10px 10px 0 0;
+        border-bottom: 1px solid $theme-border-color2;
+    }
+    &-content {
+        // height: 200px;
+    }
+    &-link {
+        cursor: pointer;
+        padding: 15px 10px;
+        box-sizing: border-box;
+        width: 100%;
+        text-align: center;
+        font-size: 15px;
+        color: $theme-color;
+        &_text {
+            color: #333;
+        }
+        border-top: 1px solid $theme-border-color2;
+        .iconfont {
+            margin-left: 5px;
+            color: $theme-color;
+            font-size: 15px;
+        }
+    }
+}

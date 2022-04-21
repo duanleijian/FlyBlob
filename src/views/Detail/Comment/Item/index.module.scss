@@ -1,0 +1,91 @@
+@import '@/common/style.scss';
+.comment-item {
+    padding: 20px 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    &-left {
+        width: 50px;
+        height: 50px;
+        &_avatar {        
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+    }
+    &-cont {
+        margin-left: 10px;
+        width: calc(100% - 50px);
+        display: flex;
+        flex-direction: column;
+        &_show {            
+            transition: height 0.2s ease-out 0s;
+            overflow: hidden;
+        }
+        &_replys {
+            margin-top: 20px;
+            border-radius: 10px;
+            background-color: rgba(247,248,250,.7);
+        } 
+        &_top {
+            margin-top: 5px;            
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            &__info {
+                display: flex;                
+                flex-direction: row;
+                &___name {
+                    font-size: 15px;
+                    color: $theme-black-color1;
+                }
+                &___replyer {
+                    font-size: 15px;
+                    span:first-child {
+                        margin-left: 10px;
+                        margin-right: 15px;
+                        color: $theme-blue-color1;                        
+                    }
+                    span:last-child {
+                        color: $theme-black-color1;
+                    }
+                }
+                &___prod {
+                    margin-left: 20px;
+                    font-size: 14px;
+                    color: $theme-gray-color1;
+                }
+            }
+            &__date {
+                font-size: 14px;
+                color: $theme-gray-color1;
+            }
+        }
+        &_text {
+            margin-top: 25px;
+            font-size: 15px;
+            color: $theme-black-color1;
+        }
+        &_actions {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: row;            
+            &__item {
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+                align-items: center;                
+                margin-right: 15px;                                
+                span:first-child {
+                    font-size: 20px;
+                    color: $theme-gray-color1;
+                }
+                div:last-child {
+                    margin-left: 5px;
+                    font-size: 14px;
+                    color: $theme-gray-color1;
+                }
+            }
+        }
+    }       
+}

@@ -1,0 +1,37 @@
+@import '@/common/style.scss';
+.relevant-article {
+    padding: 20px;    
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #fff;
+    &_header {
+        padding-bottom: 20px;
+        color: $theme-black-color1;                
+        border-bottom: 1px solid $theme-border-color1;
+    }
+    &_cont {        
+        &__item {
+            cursor: pointer;
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            &___title {
+                font-size: 15px;
+                color: $theme-black-color1;
+            }
+            &___counts {
+                margin-top: 10px;
+                display: flex;
+                flex-direction: row;
+                font-size: 13px;            
+                color: $theme-gray-color2;
+                span:last-child {
+                    margin-left: 5px;
+                }
+            }
+            &:hover &___title {
+                color: $theme-color !important;
+            }
+        }
+    }
+}

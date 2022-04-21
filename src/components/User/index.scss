@@ -1,0 +1,95 @@
+@import '../../common/style.scss';
+.user-avatar {        
+    position: relative;
+    margin-left: 25px;
+    height: 100%;
+    .user-avatar_img {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;    
+        width: 40px;
+        height: 100%;                
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+        }
+    }
+    .user-menu {        
+        position: absolute;
+        top: 60px;
+        left: -50px;        
+        display: none;
+        flex-direction: column;
+        border-radius: 4px;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+        background-color: #fff;        
+        &_item {
+            padding: 0 10px;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: flex;
+            flex-direction: row;            
+            align-items: center;
+            width: 180px;            
+            height: 50px;
+            font-size: 14px;
+            box-sizing: border-box;            
+            border-bottom: 1px solid #eee;
+            &_text {
+                margin-left: 15%;
+            }
+            &__count {                
+                margin-left: 8%;
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+                text-align: center;
+                line-height: 20px;
+                border-radius: 50%;
+                color: #fff !important;
+                background-color: red;
+            }
+            .iconfont {
+                color: $theme-color;
+                font-size: 18px;
+            }
+            &:hover {
+                color: #fff;
+                background-color: $theme-color;
+            }
+            &:hover .iconfont {
+                color: #fff;
+            }
+        }
+        &_item:first-child {
+            border-radius: 4px 4px 0 0;
+        }
+        &_item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 4px 4px;
+        }
+        
+    }
+    &:hover .user-menu {
+        display: flex;
+    }
+}
+.login-btn {
+    cursor: pointer;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 33px;
+    color: $theme-color;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 1px solid $theme-color;
+    background-color: transparent;    
+}
