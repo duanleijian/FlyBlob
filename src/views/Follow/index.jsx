@@ -5,8 +5,8 @@ import { getConcatUser, updateUserRelate } from '@/api/user'
 import NoData from '@/components/NoData'
 import FollowBtn from '@/components/FollowBtn'
 import Message from '@/components/Message'
-export default function Follow() {
-    const defaultAvatar = 'assets/default/default_avatar.png'
+import defaultAvatar from  "@/common/images/default_avatar.png"
+export default function Follow() {    
     const [follows, setFollow] = useState(true)
     const [list, setList] = useState([])
     useEffect(() => {

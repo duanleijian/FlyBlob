@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import style from './index.module.scss'
 import { getUser } from '@/utils/auth'
 import { getAllCount } from '@/api/user'
-export default function UserCard({ author }) {
-    const defaultAvatar = 'assets/default/default_avatar.png'
+import defaultAvatar from  "@/common/images/default_avatar.png"
+export default function UserCard({ author }) {    
     const nav = useNavigate()    
     const [user, setUser] = useState({})
     const [counts, setCounts] = useState({articles: 0, collects: 0, fans: 0, follow: 0, likes: 0, loves: 0})

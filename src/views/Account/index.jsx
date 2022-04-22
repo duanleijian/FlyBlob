@@ -5,8 +5,8 @@ import style from './index.module.scss'
 import Message from '@/components/Message'
 import { login, register, getUser } from '@/api/user'
 import { setToken, setUser } from '@/utils/auth'
-export default function Account() {
-    const defaultAvatar = 'assets/default/default_avatar.png'
+import defaultAvatar from  "@/common/images/default_avatar.png"
+export default function Account() {    
     const nav = useNavigate()
     const [cursor, setCursor] = useState(0)
     const [form, setForm] = useState({ userName: '', userPwd: '', userNickName: ''})

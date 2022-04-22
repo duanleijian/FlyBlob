@@ -7,8 +7,8 @@ import { dateToText } from '@/utils/date'
 import { getArticleList } from '@/api/article'
 import NoData from '@/components/NoData'
 import Message from '@/components/Message'
-export default function List() {
-	const defaultAvatar = 'assets/default/default_avatar.png'
+import defaultAvatar from  "@/common/images/default_avatar.png"
+export default function List() {	
 	const nav = useNavigate()
 	const [mode, setMode] = useState('default')
 	const [page, setPage] = useState({pageNum: 1, pageSize: 7})

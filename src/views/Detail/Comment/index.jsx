@@ -8,10 +8,10 @@ import CommentText from './CommentText'
 import { getUser, getToken } from '@/utils/auth'
 import { getCommentList, addComment } from '@/api/comment'
 import PubSub from 'pubsub-js'
+import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function Comment(props) {
 
-    let { top, articleId } = props
-    const defaultAvatar = 'assets/default/default_avatar.png'
+    let { top, articleId } = props    
     const [text, setText] = useState('')
     const [form, setForm] = useState({})
     const [total, setTotal] = useState(0)
@@ -88,7 +88,7 @@ export default function Comment(props) {
                 <div className={style['comment-keyin_title']}>我的评论</div>
                 <div className={style['comment-keyin_cont']}>
                     <div className={style['comment-keyin_cont__avatar']}>
-                        <img src={userInfo.userAvatar ? '/api' + userInfo.userAvatar : defaultAvatar} alt="" />
+                        <img src={userInfo.userAvatar ? '/api' + userInfo.userAvatar : defaultAvatar} alt="" />                        
                     </div>
                     <div className={style['comment-keyin_cont__input']}>
                         <textarea placeholder='请输入你的评论...' onChange={textChange} value={text}></textarea>

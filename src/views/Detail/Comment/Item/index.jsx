@@ -3,23 +3,20 @@ import PropTypes from 'prop-types'
 import { dateToText } from '@/utils/date'
 import style from './index.module.scss'
 import CommentText from '../CommentText'
+import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function Item(props) {
-    let { data, width, enableReply } = props    
-    const defaultAvatar = 'assets/default/default_avatar.png'
+    let { data, width, enableReply } = props        
     const [showComm, setShowComm] = useState(false)
-
     const toggleComm = () => {
         setShowComm(!showComm)
-    }
-    
+    }    
     const changeShow = (data) => {
         setShowComm(false)
     }
-
     return (
         <div className={style['comment-item']} style={{ width }}>
             <div className={style['comment-item-left']}>
-                <img className={style['comment-item-left_avatar']} src={data.commentCreaterAvatar ? '/api' + data.commentCreaterAvatar : defaultAvatar} alt="" />
+                <img className={style['comment-item-left_avatar']} src={data.commentCreaterAvatar ? '/api' + data.commentCreaterAvatar : defaultAvatar} alt="" />                
             </div>
             <div className={style['comment-item-cont']}>
                 <div className={style['comment-item-cont_top']}>

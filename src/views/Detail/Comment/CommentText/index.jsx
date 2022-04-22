@@ -6,10 +6,9 @@ import PubSub from 'pubsub-js'
 import { getNow } from '@/utils/date'
 import { getToken, getUser } from '@/utils/auth'
 import { addComment } from '@/api/comment'
-
+import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function CommentText(props) {    
-    const { data, width, height, enableReply, changeShow } = props
-    const defaultAvatar = 'assets/default/default_avatar.png'
+    const { data, width, height, enableReply, changeShow } = props    
     const [userInfo, setUserInfo] = useState({})
     const [form, setForm] = useState({})
     const [text, setText] = useState('')

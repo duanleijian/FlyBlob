@@ -14,7 +14,8 @@
             display: flex;
             flex-direction: column;
             width: 30%;
-            height: 300px;
+            min-height: 330px;
+            max-height: auto;
             border-radius: 10px;
             background-color: #fff;
             box-shadow: 0 0 10px 2px rgba(0, 0%, 0%, 0.1);
@@ -40,7 +41,24 @@
                     border-radius: 50%;
                 }                
             }
-            
+            &__follow {
+                margin: 20px auto;
+                margin-bottom: 0px;
+                width: 100px;
+                height: 37px;                
+                color: #fff;
+                text-align: center;
+                line-height: 37px;
+                font-size: 15px;
+                border-radius: 100px;
+                border: 1px solid $theme-color;
+                background-color: $theme-color;
+            }
+            &__follow___active {
+                background-color: transparent !important;
+                border-color: $theme-border-color3;
+                color: $theme-border-color3;
+            }
             &__info {
                 &___name {
                     margin-top: 20px;    
@@ -56,7 +74,7 @@
                 }
             }
             &__articles {
-                margin-top: 50px;
+                margin-top: 20px;
                 display: flex;
                 flex-direction: column;                
                 &___title {

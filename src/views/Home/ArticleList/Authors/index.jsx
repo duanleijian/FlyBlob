@@ -5,12 +5,11 @@ import style from './index.module.scss'
 import Message from '@/components/Message'
 import { getToken, setUser, getUser, hasToken } from '@/utils/auth'
 import { getRecommendUser, addConcat } from '@/api/user'
-export default function Authors() {
-	const defaultAvatar = 'assets/default/default_avatar.png'
+import defaultAvatar from  "@/common/images/default_avatar.png"
+export default function Authors() {	
 	const nav = useNavigate()
 	const [authors, setAuthors] = useState([])	
-	const [userRelate, setUserRelate] = useState('')
-	// const [refresh, setRefresh] = useState(0)
+	const [userRelate, setUserRelate] = useState('')	
 	useEffect(() => {						
 		getUser() && setUserRelate(getUser()['userRelate'])
 		getRecommendUser().then(res => {			

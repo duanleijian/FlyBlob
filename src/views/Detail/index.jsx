@@ -16,6 +16,7 @@ import Actions from './Actions'
 import { getArticle, updateArticleViews } from '@/api/article'
 import { addConcat } from '@/api/user'
 import { hasToken, getUser, setUser } from '@/utils/auth'
+import defaultAvatar from  "@/common/images/default_avatar.png"
 
 // 超链接组件
 const Link = (props) => {
@@ -30,8 +31,7 @@ const Image = (props) => {
     return <img src={src} style={styles.Image} alt='' />
 }
 
-export default function ShowRich(props) {
-    const defaultAvatar = 'assets/default/default_avatar.png'
+export default function ShowRich(props) {    
     const nav = useNavigate()
     const [searchParams]= useSearchParams();	
     const location = useLocation()
@@ -116,7 +116,7 @@ export default function ShowRich(props) {
                 <h1>{detail.articleTitle ? detail.articleTitle : ""}</h1>
                 <div className={style['detail-header_info']}>
                     <div className={style['detail-header_info__avatar']} onClick={toProfile}>
-                        <img src={detail.userAvatar ? '/api' + detail.userAvatar : defaultAvatar} alt="" />
+                        <img src={detail.userAvatar ? '/api' + detail.userAvatar : defaultAvatar} alt="" />                        
                     </div>
                     <div className={style['detail-header_info__other']}>
                         <div className={style['detail-header_info__other___name']}>{detail.userNickName}</div>

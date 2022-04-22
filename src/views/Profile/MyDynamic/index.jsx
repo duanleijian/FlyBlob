@@ -6,8 +6,8 @@ import { dateFormat } from '@/utils/date'
 import { getUser } from '@/utils/auth'
 import { getArticlesByAction } from '@/api/article'
 import NoData from '@/components/NoData'
-export default function MyDynamic({ author }) {
-    const defaultAvatar = 'assets/default/default_avatar.png'
+import defaultAvatar from  "@/common/images/default_avatar.png"
+export default function MyDynamic({ author }) {    
     const [userInfo, setUserInfo] = useState({})
     const [list, setList] = useState([])
     useEffect(() => {

@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
-import { countArticles } from '@/api/article'
-import { getFollowed, getAuthorCounts } from '@/api/user'
+import { getAuthorCounts } from '@/api/user'
 import { getUser } from '@/utils/auth'
-export default function Author(props) {
-    const defaultAvatar = 'assets/default/default_avatar.png'
+import defaultAvatar from  "@/common/images/default_avatar.png"
+export default function Author(props) {    
     const { UserInfo } = props    
     const [user, setUser] = useState({})
-    const [count, setCount] = useState({articles: 0, follows: 0, likes: 0})
-    // const [count, setCount] = useState(0)
-    // const [follow, setFollow] = useState(0)   
+    const [count, setCount] = useState({articles: 0, follows: 0, likes: 0})           
     useEffect(() => {                     
         setUser(() => {            
             Object.keys(UserInfo).length && getCount()            
