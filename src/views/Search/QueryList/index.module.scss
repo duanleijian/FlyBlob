@@ -65,8 +65,10 @@
             display: flex;
             flex-direction: column;
             border-bottom: 1px solid $theme-border-color2;
+            background-color: transparent;
+            transition: background-color 0.3s ease-in-out 0s;
             &:hover {
-                background-color: $theme-hover-color1 !important;
+                background-color: #f0f0f0 !important;
             }            
             &__top {
                 padding: 7px 20px;

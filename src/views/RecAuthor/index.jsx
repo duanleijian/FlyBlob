@@ -25,35 +25,39 @@ export default function RecAuthor() {
     }
     const toggleFollow = (e, followStatus, targetId) => {
         e.stopPropagation()
-        if (hasToken()) {
-            let userInfo = getUser()
-            if(!followStatus) {                
-                let curIds = userInfo.userRelate? `${userInfo.userRelate},${targetId}` : `${targetId}`                                                       
-                userInfo.userRelate = curIds
-                addConcat({ ids: curIds, id: userInfo.userId }).then(res => {                 
-                    if (res.code === 200) {
-                        setUser(userInfo)                        
-                        Message.success('关注成功!')
-                    }
-                    res.code !== 200 && (Message.error('关注失败!'))
-                })
+        if (!JSON.stringify(user) === "{}") {
+            if (hasToken()) {
+                let userInfo = getUser()
+                if(!followStatus) {                
+                    let curIds = userInfo.userRelate? `${userInfo.userRelate},${targetId}` : `${targetId}`                                                       
+                    userInfo.userRelate = curIds
+                    addConcat({ ids: curIds, id: userInfo.userId }).then(res => {                 
+                        if (res.code === 200) {
+                            setUser(userInfo)                        
+                            Message.success('关注成功!')
+                        }
+                        res.code !== 200 && (Message.error('关注失败!'))
+                    })
+                } else {
+                    let ids = userInfo.userRelate.split(',')                
+                    let index = ids.findIndex(i => Number(i) === Number(targetId))                                                
+                    let curIds = ids.filter((i, cur) => cur !== index).join(',')
+                    userInfo.userRelate = curIds
+                    addConcat({ ids: curIds, id: userInfo.userId}).then(res => {
+                        if (res.code === 200) {
+                            setUser(userInfo)                        
+                            Message.success('取消关注成功!')
+                        }
+                        res.code !== 200 && (Message.error('取消关注失败!'))
+                    })
+                }
+                
             } else {
-                let ids = userInfo.userRelate.split(',')                
-                let index = ids.findIndex(i => Number(i) === Number(targetId))                                                
-                let curIds = ids.filter((i, cur) => cur !== index).join(',')
-                userInfo.userRelate = curIds
-                addConcat({ ids: curIds, id: userInfo.userId}).then(res => {
-                    if (res.code === 200) {
-                        setUser(userInfo)                        
-                        Message.success('取消关注成功!')
-                    }
-                    res.code !== 200 && (Message.error('取消关注失败!'))
-                })
+                Message.error('关注前请先注册或登录!')
             }
-            
         } else {
-            Message.error('关注前请先注册或登录!')
-        }
+            Message.error('操作请先注册或登录!')
+        }        
     }
     return (
         <div className={style['recauthor']}>
@@ -68,8 +72,8 @@ export default function RecAuthor() {
                                         <h4 className={style['recauthor-list_item__info___name']}>{i.userNickName}</h4>
                                         <div className={style['recauthor-list_item__info___introduct']}>{i.userIntroduct ? i.userIntroduct : '暂无个人简介'}</div>
                                     </div>
-                                    <div className={classnames(style['recauthor-list_item__follow'], {[style['recauthor-list_item__follow___active']]: user.userRelate.includes(i.userId)})} onClick={(e) => { toggleFollow(e, user.userRelate.includes(i.userId), i.userId) }}>
-                                        {user.userRelate.includes(i.userId)? <><span className='iconfont icon-Ok'></span><span>已关注</span></> : <><span className='iconfont icon-jia'></span><span>关注</span></>}                                                                                
+                                    <div className={classnames(style['recauthor-list_item__follow'], {[style['recauthor-list_item__follow___active']]: user.userRelate? user.userRelate.includes(i.userId) : false})} onClick={(e) => { toggleFollow(e, user.userRelate? user.userRelate.includes(i.userId) : false, i.userId) }}>
+                                        {user.userRelate && user.userRelate.includes(i.userId)? <><span className='iconfont icon-Ok'></span><span>已关注</span></> : <><span className='iconfont icon-jia'></span><span>关注</span></>}                                                                                
                                     </div>
                                     <div className={style['recauthor-list_item__articles']}>
                                         <div className={style['recauthor-list_item__articles___title']}>

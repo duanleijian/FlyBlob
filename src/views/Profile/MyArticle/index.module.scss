@@ -4,6 +4,7 @@
     box-sizing: border-box;
     padding-bottom: 20px;        
     &_item {
+        cursor: pointer;
         padding-bottom: 20px;
         display: flex;
         flex-direction: column;
