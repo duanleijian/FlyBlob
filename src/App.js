@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 import { connect } from 'dva'
 import './App.css';
 import './common/iconfont.css'
@@ -10,11 +10,11 @@ function App(props) {
 	let { dispatch, keyword } = props	
 	return (
 		<div className="App">
-			<BrowserRouter>
+			<HashRouter>
 				<Suspense fallback={<div></div>}>
 					<RouterNavigate />
 				</Suspense>
-			</BrowserRouter>
+			</HashRouter>
 		</div>
 	);
 }
