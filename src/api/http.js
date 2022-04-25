@@ -2,7 +2,7 @@ import axios from 'axios'
 import { hasToken, delToken, delUser } from '@/utils/auth'
 // 创建实例
 const service = axios.create({
-	baseURL: 'http://localhost:3000/api',
+	baseURL: '/api',
 	timeout: 10000
 })
 // request拦截器
