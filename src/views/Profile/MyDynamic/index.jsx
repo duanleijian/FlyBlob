@@ -1,31 +1,69 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import style from './index.module.scss'
 import classname from 'classnames'
 import PropTypes from 'prop-types'
 import { dateFormat } from '@/utils/date'
-import { getUser } from '@/utils/auth'
+import { getUser, setUser } from '@/utils/auth'
+import { addConcat, updateUserRelate } from '@/api/user'
 import { getArticlesByAction } from '@/api/article'
 import NoData from '@/components/NoData'
+import FollowBtn from '@/components/FollowBtn'
+import Message from '@/components/Message'
 import defaultAvatar from  "@/common/images/default_avatar.png"
-export default function MyDynamic({ author }) {    
+export default function MyDynamic({ author }) {  
+    let followBtn = useRef()   
     const [userInfo, setUserInfo] = useState({})
     const [list, setList] = useState([])
     useEffect(() => {
+        fetchData()           
+    }, [])
+    const fetchData = () => {
         if(author) {
             setUserInfo(author)
-            getArticlesByAction(author.userId, 'all').then(res => {                                           
+            getArticlesByAction(author.userId, 'all').then(res => {                                                                          
                 res.code === 200 && (setList(res.data))
             })    
         } else {
             let user = getUser()
             setUserInfo(user)
             if (user) {
-                getArticlesByAction(user.userId, 'all').then(res => {                             
+                getArticlesByAction(user.userId, 'all').then(res => {                                                                                                              
                     res.code === 200 && (setList(res.data))
                 })
             }
-        }          
-    }, [])
+        }
+    }
+    const toggleFollow = (targetId, curfollow) => {
+        let curUserRelate = getUser()['userRelate'].split(',')
+        let curUserId =  getUser()['userId']
+        if(!curfollow) {                
+            let curIds = userInfo.userRelate? `${userInfo.userRelate},${targetId}` : `${targetId}`                                                       
+            userInfo.userRelate = curIds
+            addConcat({ ids: curIds, id: userInfo.userId }).then(res => {                 
+                if (res.code === 200) {
+                    setUser(userInfo)
+                    setList([])
+                    fetchData()                                                               
+                    Message.success('关注成功!')
+                }
+                res.code !== 200 && (Message.error('关注失败!'))
+            })
+        } else {
+            let ids = userInfo.userRelate.split(',')                
+            let index = ids.findIndex(i => Number(i) === Number(targetId))                                                
+            let curIds = ids.filter((i, cur) => cur !== index).join(',')
+            userInfo.userRelate = curIds
+            addConcat({ ids: curIds, id: userInfo.userId}).then(res => {
+                if (res.code === 200) {
+                    setUser(userInfo)
+                    setList([])
+                    fetchData()                                                                                                            
+                    Message.success('取消关注成功!')
+                }
+                res.code !== 200 && (Message.error('取消关注失败!'))
+            })
+        }
+    }
     return (
         <div className={style['myarticle-list']}>
             { list.length? '' : <NoData />}
@@ -41,8 +79,7 @@ export default function MyDynamic({ author }) {
                                         </div>
                                     </div>
                                     <div className={style['myarticle-list_item__top___follow']}>
-                                        <span>关注</span>
-                                        <span className={`${style['myarticle-list_item__top___follow____icon']} iconfont icon-jiahao` }></span>
+                                        <FollowBtn ref={followBtn} curUserId={i.userId} click={() => { toggleFollow(i.userId, userInfo.userRelate? userInfo.userRelate.includes(i.userId) : false) }}/>                                        
                                     </div>
                                 </div>
                                 <div className={style['myarticle-list_item__title']}>{i.articleTitle}</div>

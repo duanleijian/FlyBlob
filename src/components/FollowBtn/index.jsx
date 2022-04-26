@@ -1,17 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import style from './index.module.scss'
-import Message from '@/components/Message'
 import { getUser } from '@/utils/auth'
-export default function FollowBtn({ curUser, width, click }) {
-    const [status, setStatus] = useState(false)
-    useEffect(() => {        
-        if (getUser()) {
-            const flag = getUser().userRelate.includes(curUser.userId)
-            setStatus(flag)
-        }
+import Message from '@/components/Message'
+function FollowBtn({ curUser, curUserId, width, click }, ref) {
+    const [status, setStatus] = useState(false)    
+    useEffect(() => {               
+        initFollowStatus()
     }, [])
+    useImperativeHandle(ref, () => ({
+        refreshStatus
+    }))
+    const refreshStatus = () => {                        
+        initFollowStatus()
+    }
+    const initFollowStatus = () => {
+        if (getUser()) {                                            
+            setStatus(getUser().userRelate.includes(curUserId? curUserId : curUser.userId))
+        } else {
+            Message.error('请先登录再操作!')
+        }
+    }
     const toggleFollow = () => {
         click()
     }
@@ -25,13 +35,19 @@ export default function FollowBtn({ curUser, width, click }) {
         </div>
     )
 }
+FollowBtn = forwardRef(FollowBtn)
+FollowBtn.displayName = "FollowBtn"
 FollowBtn.propTypes = {
     curUser: PropTypes.object,
+    curUserId: PropTypes.number,
     width: PropTypes.string,
     click: PropTypes.func
 }
 FollowBtn.defaultProps = {
     curUser: {},
+    curUserId: null,
     width: '100px',
     click: () => {}
 }
+export default FollowBtn
+

@@ -1,10 +1,10 @@
 .article-list {
     padding-bottom: 50px;    
     margin-top: 30px;
-    margin-left: 27%;
+    margin-left: 20%;
     display: flex;
     flex-direction: row;
-    width: calc(100% - 27%);
+    // width: calc(100% - 20%);
     height: auto;
     overflow: hidden;
     &_left {

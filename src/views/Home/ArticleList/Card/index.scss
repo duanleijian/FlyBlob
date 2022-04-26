@@ -2,12 +2,12 @@
 .card {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 280px;
     height: auto;
     box-sizing: border-box;    
     height: auto;
     border-radius: 10px;    
-    background-color: #fff;
+    background-color: #fff;    
     overflow: hidden;
     &-title {
         padding: 15px 10px;
