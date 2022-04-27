@@ -4,7 +4,7 @@ import style from './index.module.scss'
 import FormTitle from '../FormTitle'
 import Modal from '@/components/Modal'
 import Message from '@/components/Message'
-import { getUser, setUser } from '@/utils/auth'
+import { getUser, setUser, setToken } from '@/utils/auth'
 import { sendEmail, verEmail, resetPassword } from '@/api/user'
 export default function AccountConfig() {
     const [account, setAccount] = useState({userEmail: '', userPwd: ''})
@@ -83,7 +83,9 @@ export default function AccountConfig() {
     const updatePassword = () => {        
         resetPassword({code, userPwd: password, time: new Date().getTime()}).then(res => {            
             if (res.code === 200) {
-                setUser(res.data)
+                console.log('config', res)
+                setUser(res.data.user)
+                setToken(res.data.token)
                 Message.success('密码修改成功!')
             }            
             res.code !== 200 && (Message.error(res.msg))
@@ -163,7 +165,7 @@ export default function AccountConfig() {
                             </div>
                     </div>
                     <div className={style['modal-content_input']}>
-                        <input className={style['modal-content_input__val']}  type="text" value={password} onChange={passwordChange} placeholder="请输入重置密码"/>                            
+                        <input className={style['modal-content_input__val']}  type="password" value={password} onChange={passwordChange} placeholder="请输入重置密码"/>                            
                     </div>
                     <div className={style['modal-content_btn']} onClick={updatePassword}>修改</div>
                 </div>

@@ -25,10 +25,12 @@
             flex-direction: row;
             justify-content: space-between;
             &___pwd {
-                flex-grow: 1;
+                flex-grow: 1;                
                 margin-left: 50px;
+                height: 100%;
                 color: #333;
                 font-size: 15px;
+                background-color: transparent;
             } 
             &___left {
                 font-size: 14px;
