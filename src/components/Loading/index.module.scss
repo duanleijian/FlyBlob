@@ -1,0 +1,12 @@
+.loading {    
+    display: flex;   
+    height: 300px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &-tip {
+        padding-top: 20px;
+        font-size: 15px;
+        text-align: center;
+    }
+}

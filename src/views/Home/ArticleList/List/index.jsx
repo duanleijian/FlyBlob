@@ -7,16 +7,20 @@ import { dateToText } from '@/utils/date'
 import { getArticleList } from '@/api/article'
 import NoData from '@/components/NoData'
 import Message from '@/components/Message'
+import Loading from '@/components/Loading'
 import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function List() {	
 	const nav = useNavigate()
+	const [load, setLoad] = useState(true)
 	const [mode, setMode] = useState('default')
 	const [page, setPage] = useState({pageNum: 1, pageSize: 7})
 	const [total, setTotal] = useState(0)
 	const [list, setList] = useState([])
 	useEffect(() => {
 		listen()
+		setLoad(true)
 		getArticleList({sort: mode, ...page}).then(res => {						
+			setLoad(false)
 			if (res.code === 200) {
 				setTotal(res.data.total)
 				setList(res.data.list)
@@ -26,9 +30,12 @@ export default function List() {
 	}, [])
 	const listen = () => {
 		PubSub.subscribe(Constant.ARTICLE_LIST_GET, (msg, data) => {
+			setLoad(true)
+			setList([])
 			setMode(data.sort)			
 			setPage({pageNum: 1, pageSize: 7})
-			getArticleList({sort: data.sort, ...{pageNum: 1, pageSize: 7}}).then(res => {						
+			getArticleList({sort: data.sort, ...{pageNum: 1, pageSize: 7}}).then(res => {
+				setLoad(false)						
 				if (res.code === 200) {
 					setTotal(res.data.total)
 					setList(res.data.list)
@@ -49,9 +56,9 @@ export default function List() {
 	}
 	return (
 		<div className='blog-list'>
-			{list.length ? '' : <NoData />}
+			<Loading show={load} />			
 			{				
-				list.map((i, cur) => {										
+				!load? list.length? list.map((i, cur) => {										
 					return  <div key={i.articleId} className='blog-item' onClick={() => { toDetail(i.articleId) }}>
 								<div className='blog-item_header'>
 									<span>{dateToText(i.articleDate)}</span>
@@ -84,9 +91,9 @@ export default function List() {
 									</div>
 								</div>
 							</div>							
-				})
+				}) : <NoData /> : ''
 			}
-			{list.length > 0? list.length < total && list.length > 0? <div className='blog-list_more' onClick={nextPage}>加载更多</div> : <div className='blog-list_more' >没有更多了</div> : ""}
+			{!load? (list.length > 0? list.length < total && list.length > 0? <div className='blog-list_more' onClick={nextPage}>加载更多</div> : <div className='blog-list_more' >没有更多了</div> : "") : ""}
 		</div>
 	)
 }

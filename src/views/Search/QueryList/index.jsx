@@ -9,10 +9,12 @@ import Constant from '@/constant/constant'
 import Pubsub from 'pubsub-js'
 import NoData from '@/components/NoData'
 import DateSelect from '@/components/DateSelect'
+import Loading  from '@/components/Loading'
 import { getSearchArticles } from '@/api/article'
 function QueryList(props) {    
     let { tabs, dispatch, keyword } = props    
     const nav = useNavigate()
+    const [load, setLoad] = useState(true)
     const [total, setTotal] = useState(0)
     const [list, setList] = useState([])
     const [cursor, setCursor] = useState(0)
@@ -49,8 +51,10 @@ function QueryList(props) {
             }
         }
     }
-    const queryData = (mode, curPage) => {        
-        getSearchArticles({ keyword: keyword, sort: tabs[cursor].key, dateRange: range, ...curPage }).then(res => {                       
+    const queryData = (mode, curPage) => {
+        setLoad(true)        
+        getSearchArticles({ keyword: keyword, sort: tabs[cursor].key, dateRange: range, ...curPage }).then(res => { 
+            setLoad(false)                              
             if (res.code === 200) {                
                 if (mode) {
                     setTotal(res.data.total)
@@ -84,9 +88,9 @@ function QueryList(props) {
                 <DateSelect right="20px" width="120px" sendSelect={getSelect}/>
             </div>
             <div className={style['query-list']}>
-                {list.length ? '' : <NoData />}                
+                <Loading show={load} loadName="检索文章中..."/>                
                 {
-                    list.map(i => {
+                    !load? list.length ? list.map(i => {
                         return <div key={i.articleId} className={style['query-list_item']} onClick={() => { toDetail(i.articleId) }}>
                                     <div className={style['query-list_item__top']}>
                                         <h6 className={style['query-list_item__top___info']}>{i.userNickName}</h6>
@@ -107,10 +111,10 @@ function QueryList(props) {
                                         </div>
                                     </div>
                                 </div>
-                    })
+                    }) : <NoData /> : ''
                 }
             </div>
-            {refUseRef.current.list.length >= refUseRef.current.total && list.length > 0 ? <div className={style['query-nomore']}>没有更多了</div> : ''}
+            {!load? (refUseRef.current.list.length >= refUseRef.current.total && list.length > 0 ? <div className={style['query-nomore']}>没有更多了</div> : '') : ''}
         </div>
     )
 }
