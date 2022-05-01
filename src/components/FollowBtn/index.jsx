@@ -16,14 +16,14 @@ function FollowBtn({ curUser, curUserId, width, click }) {
         initFollowStatus()
     }
     const initFollowStatus = () => {        
-        if (JSON.stringify(getUser()) !== "{}") {
+        if (getUser()) {
             setStatus(getUser().userRelate.includes(curUserId? curUserId : curUser.userId))
         } else {
             setStatus(false)
         }                 
     }
     const toggleFollow = () => {
-        JSON.stringify(getUser()) !== "{}"? click() : Message.error('请先登录再操作!')                
+        getUser()? click() : Message.error('请先登录再操作!')                
     }    
     return (
         <div
