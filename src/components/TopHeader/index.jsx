@@ -1,18 +1,28 @@
-import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import './index.scss'
+import { getUser } from '@/utils/auth'
 import TopTabs from '@/components/TopTabs'
 import Search from '@/components/Search'
 import User from '@/components/User'
+import Message from '@/components/Message'
 export default function TopHeader(props) {
     const { content } = props, nav = useNavigate()
-    const { state } = useLocation()
+    const { state, pathname } = useLocation()
+    const [ userInfo, setUserInfo ] = useState({})
     useEffect(() => {        
-                
-    }, [])        
-    const editArticle = () => {        
-        nav('/edit', {})
+        getUser() && (setUserInfo(getUser()))
+    }, [])
+    useEffect(() => {
+        getUser() && (setUserInfo(getUser()))
+    }, [pathname])        
+    const editArticle = () => {
+        if (JSON.stringify(userInfo) !== "{}") {
+            nav('/edit', {})
+        } else {
+            Message.error('请先登录再操作!')
+        }        
     }
     return (
         <div className='top-header'>

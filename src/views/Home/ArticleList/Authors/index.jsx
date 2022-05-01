@@ -2,20 +2,35 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import classnames from 'classnames'
 import style from './index.module.scss'
+import Constant from '@/constant/constant'
+import Pubsub from 'pubsub-js'
 import Message from '@/components/Message'
 import { getToken, setUser, getUser, hasToken } from '@/utils/auth'
 import { getRecommendUser, addConcat } from '@/api/user'
+import Loading from '@/components/Loading'
 import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function Authors() {	
 	const nav = useNavigate()
+	const [load, setLoad] = useState(false)
 	const [authors, setAuthors] = useState([])	
 	const [userRelate, setUserRelate] = useState('')	
-	useEffect(() => {						
+	useEffect(() => {
+		refresh()						
+		fetchData()
+	}, [])
+	const refresh = () => {
+		Pubsub.subscribe(Constant.EXIT_LOGIN, (msg, data) => {
+			fetchData()
+		})		
+	}
+	const fetchData = () => {
 		getUser() && setUserRelate(getUser()['userRelate'])
-		getRecommendUser().then(res => {			
+		setLoad(true)
+		getRecommendUser().then(res => {		
+			setLoad(false)	
 			res.code === 200 && ( setAuthors(res.data) )
 		})
-	}, [])
+	}
 	const toAuthorDetail = (user) => {
 		nav('/profile/0', {state: {curUser: user}})
 	}
@@ -55,6 +70,7 @@ export default function Authors() {
 	}
 	return (
 		<div className='authors'>
+			<Loading show={load} width="15%" loadType="bubbles"/>
 			{
 				authors.slice(0, 5).map(i => {
 					return  <div key={i.userId} className={style['authors-item']} onClick={() => { toAuthorDetail(i) }}>

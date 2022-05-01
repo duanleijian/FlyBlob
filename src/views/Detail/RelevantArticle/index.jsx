@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import style from './index.module.scss'
 import PropTypes from 'prop-types'
 import { getConcatArticles } from '@/api/article'
+import Loading from '@/components/Loading'
 export default function RelevantArticle(props) {
     let { top, article } = props
     const nav = useNavigate()
+    const [load, setLoad] = useState(false)
     const [list, setList] = useState([])
     useEffect(() => {        
         if (JSON.stringify(article) !== "{}") {
+            setLoad(true)
             getConcatArticles(article.articleId).then(res => {                
+                setLoad(false)
                 res.code === 200 && (setList(res.data))
             })
         }
@@ -21,6 +25,7 @@ export default function RelevantArticle(props) {
         <div className={style['relevant-article']} style={{marginTop: top}}>
             <div className={style['relevant-article_header']}>相关文章</div>
             <div className={style['relevant-article_cont']}>
+                <Loading show={load} width="15%" loadType="bubbles" boxHeight="200px"/>
                 {
                     list.slice(0, 5).map(i => {
                         return  <div key={i.articleId} className={style['relevant-article_cont__item']} onClick={() => { toDetail(i.articleId) }}>

@@ -79,7 +79,7 @@ export default function MyDynamic({ author }) {
                                         </div>
                                     </div>
                                     <div className={style['myarticle-list_item__top___follow']}>
-                                        <FollowBtn ref={followBtn} curUserId={i.userId} click={() => { toggleFollow(i.userId, userInfo.userRelate? userInfo.userRelate.includes(i.userId) : false) }}/>                                        
+                                        <FollowBtn curUserId={i.userId} click={() => { toggleFollow(i.userId, userInfo.userRelate? userInfo.userRelate.includes(i.userId) : false) }}/>                                        
                                     </div>
                                 </div>
                                 <div className={style['myarticle-list_item__title']}>{i.articleTitle}</div>

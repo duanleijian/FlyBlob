@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import './index.scss'
 import PropTypes from 'prop-types'
+import './index.scss'
+import Constant from '@/constant/constant'
+import Pubsub from 'pubsub-js'
 import { getUser } from '@/api/user'
 import { getToken, delToken, setUser, delUser } from '../../utils/auth'
 import Message from '@/components/Message'
@@ -53,6 +55,7 @@ export default function User(props) {
                 delToken()
                 delUser()
                 setHasLogin(false)
+                Pubsub.publish(Constant.EXIT_LOGIN, {})
                 nav('/', {})
                 break
             default: break
