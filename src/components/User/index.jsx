@@ -19,8 +19,7 @@ export default function User(props) {
     const fetchData = () => {
         const token = getToken()                   
         if (token) {
-            getUser(token).then(res => {
-                console.log('user-cpn', res)
+            getUser(token).then(res => {                
                 if (res.code === 200) {                    
                     setUserInfo(res.data[0])
                     setUser(res.data[0])

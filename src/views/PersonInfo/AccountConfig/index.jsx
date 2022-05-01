@@ -82,8 +82,7 @@ export default function AccountConfig() {
     }
     const updatePassword = () => {        
         resetPassword({code, userPwd: password, time: new Date().getTime()}).then(res => {            
-            if (res.code === 200) {
-                console.log('config', res)
+            if (res.code === 200) {                
                 setUser(res.data.user)
                 setToken(res.data.token)
                 Message.success('密码修改成功!')

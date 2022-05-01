@@ -75,7 +75,7 @@ export function getNow() {
 
 export function dateToText(time) {
 
-    let dateTimeStamp = new Date(time).getTime()
+    let dateTimeStamp = new Date(time).getTime() - 1000 * 60 * 60 * 8    
     let minute = 1000 * 60
     let hour = minute * 60
     let day = hour * 24
@@ -111,6 +111,6 @@ export function dateToText(time) {
     } else {
         result = "刚刚";
     }
-
+        
     return result;
 }

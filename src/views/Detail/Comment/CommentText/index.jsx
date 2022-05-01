@@ -14,7 +14,7 @@ export default function CommentText(props) {
     const [text, setText] = useState('')
     const [textTip, setTextTip] = useState('请输入你的评论...')
     useEffect(() => {        
-        getToken() && ( setUserInfo(getUser()) )        
+        getUser() && ( setUserInfo(getUser()) )        
     }, [])
     useEffect(() => {
         if (JSON.stringify(data) !== '{}' && enableReply) {
@@ -62,7 +62,7 @@ export default function CommentText(props) {
     return <div className={style['comment-keyin']} style={{width, height}}>        
         <div className={style['comment-keyin_cont']}>
             <div className={style['comment-keyin_cont__avatar']}>
-                <img src={userInfo.userAvatar ? userInfo.userAvatar : defaultAvatar} alt="" />
+                <img src={userInfo.userAvatar ? '/api' + userInfo.userAvatar : defaultAvatar} alt="" />
             </div>
             <div className={style['comment-keyin_cont__input']}>
                 <textarea placeholder={textTip} onChange={textChange} value={text}></textarea>

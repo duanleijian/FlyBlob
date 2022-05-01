@@ -80,8 +80,7 @@ export default function ShowRich(props) {
         if (hasToken()) {
             let userInfo = getUser()
             if(!followStatus) {                
-                let curIds = userInfo.userRelate? `${userInfo.userRelate},${detail.userId}` : `${detail.userId}`                
-                console.log('curIds', curIds)                        
+                let curIds = userInfo.userRelate? `${userInfo.userRelate},${detail.userId}` : `${detail.userId}`                                                       
                 userInfo.userRelate = curIds
                 addConcat({ ids: curIds, id: userInfo.userId }).then(res => {                 
                     if (res.code === 200) {
