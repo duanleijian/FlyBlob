@@ -56,7 +56,15 @@ export function addArticle(data) {
     return http({
         url: '/article',
         method: 'post',
-        data: data
+        data
+    })
+}
+// 更新文章
+export function updateArticle(data) {
+    return http({
+        url: '/article',
+        method: 'put',
+        data
     })
 }
 // 统计文章

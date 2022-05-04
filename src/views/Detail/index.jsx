@@ -13,8 +13,8 @@ import Message from '@/components/Message'
 import Author from './Author'
 import Comment from './Comment'
 import Actions from './Actions'
-import { getArticle, updateArticleViews } from '@/api/article'
 import { addConcat } from '@/api/user'
+import { getArticle, updateArticleViews } from '@/api/article'
 import { hasToken, getUser, setUser } from '@/utils/auth'
 import defaultAvatar from  "@/common/images/default_avatar.png"
 
@@ -37,10 +37,12 @@ export default function ShowRich(props) {
     const location = useLocation()
     const params = useParams()
     const [detail, setDetail] = useState({})
+    const [userInfo, setUserInfo] = useState({})
     const [followStatus, setFollowStatus] = useState(false)
     const [editorState, setEditorState] = useState(null)                  
-    useEffect(() => {        
+    useEffect(() => {              
         fetchDetail()
+        getUser() && setUserInfo(getUser())
     }, [location.key])    
     const fetchDetail = () => {                       
         let id = searchParams.get('id') || params['id'] || location.state.id                               
@@ -109,6 +111,9 @@ export default function ShowRich(props) {
             Message.error('关注前请先注册或登录!')
         }
     }
+    const toUpdateArt = () => {
+        nav('/update', {state: {detail}})
+    }
     return (
         <div className={style['detail']}>
             <div className={style['detail-header']}>
@@ -123,6 +128,7 @@ export default function ShowRich(props) {
                             <span>{detail.articleDate? dateFormat(detail.articleDate, true) : ''}</span>
                             <span>阅读 {detail.articleViews ? detail.articleViews : 0}</span>
                             <span>字数 {detail.articleTip ? detail.articleTip.length : 0}</span>
+                            {userInfo.userId === detail.userId? <span className={style['detail-header_info__other___explain____edit']} onClick={toUpdateArt}>编辑文章</span> : ''}                                                        
                         </div>
                     </div>
                     {

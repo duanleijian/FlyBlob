@@ -46,11 +46,12 @@
                 line-height: 40px;                                                
                 span:first-child,
                 span:last-child {
-                    font-size: 15px;
+                    font-size: 14px;
                     color: $theme-black-color1;
                 }
                 span:last-child {
-                    margin-left: 3px;
+                    font-size: 13px;
+                    margin-left: 5px;
                 }
                 &:hover {                    
                     span { color: #fff; }

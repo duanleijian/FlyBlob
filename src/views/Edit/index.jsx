@@ -40,8 +40,7 @@ export default function Edit() {
         const curVal = e.target.value
         setForm({...form, articleTitle: curVal}) 
     }
-    const getContent = (payload) => {        
-        // const text = richJSON.replace(/\'/g, "\\\'").replace(/\"/g, "\\\"").replace(/\\n/g, "\\\n")       
+    const getContent = (payload) => {                       
         let data = null        
         payload.mode.includes('json') && ( data = {...form, articleContent: html_encode(payload.content), userId: userInfo.userId} )                                                     
         payload.mode.includes('html') && ( data = {...form, articleContent: payload.content, userId: userInfo.userId, articleTip: payload.text} )
@@ -49,6 +48,7 @@ export default function Edit() {
         addArticle(data).then(res => {
             if (res.code === 200) {
                 Message.success('文章发布成功!')
+                nav(`/profile/1`, {})
             } else {
                 Message.error('文章发布失败:' + res.msg)
             }

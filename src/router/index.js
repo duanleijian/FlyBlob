@@ -50,13 +50,17 @@ const routes = [
             {
                 path: 'follows',
                 element: lazyLoad(() => import('@/views/Follow/index'), {title: '我的关注'})
-            }            
+            },
+            {
+                path: 'update',
+                element: lazyLoad(() => import('@/views/UpdateArt/index'), {title: '编辑文章'})
+            },                       
         ]
     },
     {
         path: '/account',
         element: lazyLoad(() => import('@/views/Account/index'), {title: '登录'})
-    },
+    },     
     {
         path: '*',
         element: lazyLoad(() => import('@/views/NotFound/index'), { title: '404' })

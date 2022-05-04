@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
-import { Editor, EditorState, RichUtils, AtomicBlockUtils, convertToRaw, Modifier, CompositeDecorator, convertFromRaw, convertFromHTML} from 'draft-js'
+import { Editor, EditorState, RichUtils, AtomicBlockUtils, convertToRaw, Modifier, CompositeDecorator, convertFromRaw, convertFromHTML, createEditorState} from 'draft-js'
 import { styles, customStyleMap, inlineStyles, exportInlineStyles,  getEntityStrategy, findLinkEntities } from './mixin'
 // import draftToHtml from 'draftjs-to-html'
-import {stateToHTML} from 'draft-js-export-html';
+import { stateToHTML } from 'draft-js-export-html';
+import { stateFromHTML } from 'draft-js-import-html';
 import Immutable from 'immutable'
 import 'draft-js/dist/Draft.css'
 import Modal from '@/components/Modal'
@@ -42,11 +43,11 @@ const blockRendererFn = (contentBlock) => {
     return result
 }
 export default function RichText(props) {
-    let { sendContent } = props
+    let { sendContent, html } = props        
     let photoSelect = null
     const nav = useNavigate()
     // 初始化富文本状态
-    const [editorState, setEditorState] = useState(() => EditorState.createEmpty(new CompositeDecorator([
+    const initParam = html? EditorState.createWithContent(stateFromHTML(html)) : () => EditorState.createEmpty(new CompositeDecorator([
         {
             strategy: findLinkEntities,
             component: Link,
@@ -55,7 +56,8 @@ export default function RichText(props) {
             strategy: getEntityStrategy('IMMUTABLE'),
             component: Image
         }
-    ])))
+    ]))          
+    const [editorState, setEditorState] = useState(initParam)    
     const [dialogShow, setDialogShow] = useState(false)
     const [linkVal, setLinkVal] = useState('')
     const [photoSrc, setPhotoSrc] = useState('')
@@ -146,7 +148,7 @@ export default function RichText(props) {
             const htmlStr = stateToHTML(editorState.getCurrentContent(), {inlineStyles: exportInlineStyles})            
             sendContent({mode: 'html', content: htmlStr, text: editorState.getCurrentContent().getPlainText()})
         }             
-    }       
+    }          
     return (
         <div className={style['rich-text']}>            
             <div className={style['rich-text_menu']}>
@@ -162,7 +164,7 @@ export default function RichText(props) {
                 <div className={style['rich-text_menu__right']}>
                     <div className={style['rich-text_menu__right___item']} onClick={ () => { articlePublish('html') }}>
                         <span className='iconfont icon-zhuanfa'></span>
-                        <span>发布</span>
+                        {html? <span>编辑</span> : <span>发布</span>}                        
                     </div>
                 </div>
             </div>
@@ -186,8 +188,10 @@ export default function RichText(props) {
     )
 }
 RichText.propTypes = {
-    sendContent: PropTypes.func.isRequired
+    sendContent: PropTypes.func.isRequired,
+    html: PropTypes.string
 }
 RichText.defaultProps = {
-    sendContent: () => { }
+    sendContent: () => { },
+    html: ''
 }

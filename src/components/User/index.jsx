@@ -38,14 +38,17 @@ export default function User(props) {
             case '个人中心':
                 nav(`/profile/${0}`, {state: {curActive: "0"}})
                 break
+            case '我的文章':
+                nav(`/profile/${1}`, {state: {curActive: "1"}})
+                break
             case '我点赞的博文':
-                nav(`/profile/${1}`, {state: {curActive: "2"}})
-                break
-            case '我喜欢的博文':
-                nav(`/profile/${2}`, {state: {curActive: "4"}})
-                break
+                nav(`/profile/${2}`, {state: {curActive: "2"}})
+                break            
             case '我收藏的博文':
                 nav(`/profile/${3}`, {state: {curActive: "3"}})
+                break
+            case '我喜欢的博文':
+                nav(`/profile/${4}`, {state: {curActive: "4"}})
                 break            
             case '设置':
                 nav('/person/account', {})
@@ -96,7 +99,7 @@ User.propTypes = {
 User.defaultProps = {
     menu: [
         { icon: 'icon-yonghu', name: '个人中心', count: 0 },
-        // { icon: 'icon-xiaoxi', name: '我的消息中心', count: 1 },
+        { icon: 'icon-xiaoxi', name: '我的文章', count: 0 },
         { icon: 'icon-dianzan', name: '我点赞的博文', count: 0 },
         { icon: 'icon-xihuan', name: '我喜欢的博文', count: 0 },
         { icon: 'icon-shoucang', name: '我收藏的博文', count: 0 },

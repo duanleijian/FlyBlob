@@ -70,6 +70,12 @@
                         color: $theme-gray-color2;
                         margin-right: 5px;
                     }
+                    &____edit {
+                        margin-left: 10px;
+                        cursor: pointer;
+                        font-size: 13px;
+                        color: #1E80FF !important;
+                    }
                 }
             }
             &__action {
