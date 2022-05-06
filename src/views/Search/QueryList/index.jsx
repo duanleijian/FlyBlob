@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { connect } from 'dva'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import style from './index.module.scss'
 import { dateToText } from '@/utils/date'
+import { throttle } from '@/utils/util'
 import Constant from '@/constant/constant'
 import Pubsub from 'pubsub-js'
 import NoData from '@/components/NoData'
@@ -12,9 +13,11 @@ import DateSelect from '@/components/DateSelect'
 import Loading  from '@/components/Loading'
 import { getSearchArticles } from '@/api/article'
 function QueryList(props) {    
-    let { tabs, dispatch, keyword } = props    
+    let { tabs, dispatch, keyword } = props
+    let location = useLocation()        
     const nav = useNavigate()
-    const [load, setLoad] = useState(true)
+    const [load, setLoad] = useState(false)
+    const [nextLoad, setNextLoad] = useState(false)
     const [total, setTotal] = useState(0)
     const [list, setList] = useState([])
     const [cursor, setCursor] = useState(0)
@@ -24,41 +27,43 @@ function QueryList(props) {
     const pageRef = React.useRef()    
     refUseRef.current = {list: list, total: total}
     pageRef.current = page         
-    useEffect(() => {
-        // Pubsub.subscribe(Constant.ARTICLE_SEARCH, (msg, data) => {
-        //     queryData(false, {pageNum: 1, pageSize: 7})
-        // })
+    useEffect(() => {        
         listenScroll()        
     }, [])
     useEffect(() => {
         refUseRef.current = {list: list, total: total}
         pageRef.current = page
-    }, [list, total])        
-    useEffect(() => {        
+    }, [list, total])
+    useEffect(() => {
+        pageRef.current.pageNum = 1        
         queryData(false, {pageNum: 1, pageSize: 7})
-    }, [cursor, keyword, range])
-    const listenScroll = () => {        
-        window.onscroll = () => {
-            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-            let barHeight = document.documentElement.clientHeight || document.body.clientHeight
-            let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
-            if (scrollTop + barHeight === scrollHeight) {                                
-                if (refUseRef.current.list.length < refUseRef.current.total) {
-                    let curPage = {pageNum: pageRef.current.pageNum + 1, pageSize: pageRef.current.pageSize}
-                    setPage(curPage)
-                    queryData(true, curPage)
-                }                
-            }
+    }, [location.search, cursor, range])            
+    const triggerScroll = function () {            
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+        let barHeight = document.documentElement.clientHeight || document.body.clientHeight
+        let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight                                                          
+        loadNext(scrollTop + barHeight >= scrollHeight - 5)
+    }
+    const loadNext = function (enableScroll) {
+        if (enableScroll) {              
+            if (pageRef.current.pageNum < Math.ceil(refUseRef.current.total / pageRef.current.pageSize)) {
+                let curPage = {pageNum: ++pageRef.current.pageNum, pageSize: pageRef.current.pageSize}
+                setPage(curPage)
+                queryData(true, curPage)
+            }                                        
         }
     }
+    const listenScroll = () => {                
+        window.addEventListener('scroll', throttle(triggerScroll, 500, 1000))
+    }
     const queryData = (mode, curPage) => {
-        setLoad(true)        
+        mode? setNextLoad(true) : setLoad(true)             
         getSearchArticles({ keyword: keyword, sort: tabs[cursor].key, dateRange: range, ...curPage }).then(res => { 
-            setLoad(false)                              
+            mode? setNextLoad(false) : setLoad(false)                             
             if (res.code === 200) {                
-                if (mode) {
+                if (mode) {                    
                     setTotal(res.data.total)
-                    setList([...refUseRef.current.list, ...res.data.list])
+                    setList([...refUseRef.current.list, ...res.data.list])                    
                 } else {
                     setTotal(res.data.total)
                     setList(res.data.list)
@@ -114,6 +119,7 @@ function QueryList(props) {
                     }) : <NoData /> : ''
                 }
             </div>
+            <div style={{display: nextLoad? 'block' : 'none'}} className={style['query-pageload']}>正在加载中...</div>
             {!load? (refUseRef.current.list.length >= refUseRef.current.total && list.length > 0 ? <div className={style['query-nomore']}>没有更多了</div> : '') : ''}
         </div>
     )

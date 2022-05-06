@@ -22,9 +22,10 @@ function Search(props) {
     const redirect = () => {        
         dispatch({type: 'keyword/updateKeyWord', payload: {val: keyVal}})
         // Pubsub.publish(Constant.ARTICLE_SEARCH, {})
-        if (!pathname.includes('/search')) {
-            nav(`/search?key=${keyVal}`)
-        }          
+        // if (!pathname.includes('/search')) {
+            
+        // }
+        nav(`/search?key=${keyVal}&redirect=${parseInt(Math.random() * 100000000000)}`)          
         
     }
     return (

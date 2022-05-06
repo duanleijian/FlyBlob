@@ -5,6 +5,7 @@ import style from './index.module.scss'
 import { getUser } from '@/utils/auth'
 import { updateArticleAction } from '@/api/article'
 import { getUserAction, updateUserAction } from '@/api/action'
+import Message from '@/components/Message'
 export default function Actions(props) {
     let { data } = props
     const [actions, setActions] = useState({likes: 0, loves: 0, collects: 0})
@@ -34,34 +35,38 @@ export default function Actions(props) {
         }
     }
     const actionChange = (type) => {
-        switch(type) {
-            case 'like':
-                updateUserAction({actionLike: actions.likes? 0 : 1, articleId: data.articleId, actionUserId: userInfo.userId}).then(res => {                    
-                    res.code === 200 && ( setActions(res.data) )
-                })
-                updateArticleAction({articleId: data.articleId, articleLikes: actions.likes? count.likes - 1 : count.likes + 1}).then(res => {                    
-                    res.code === 200 && (setCount(res.data))
-                })
-                break
-            case 'collect':
-                updateUserAction({actionCollect: actions.collects? 0 : 1, articleId: data.articleId, actionUserId: userInfo.userId}).then(res => {                    
-                    res.code === 200 && ( setActions(res.data) )
-                })
-                updateArticleAction({articleId: data.articleId, articleCollects: actions.collects? count.collects - 1 : count.collects + 1}).then(res => {                    
-                    res.code === 200 && (setCount(res.data))
-                })
-                break
-            case 'love':
-                updateUserAction({actionLove: actions.loves? 0 : 1, articleId: data.articleId, actionUserId: userInfo.userId}).then(res => {                    
-                    res.code === 200 && ( setActions(res.data) )
-                })
-                updateArticleAction({articleId: data.articleId, articleLoves: actions.loves? count.loves - 1 : count.loves + 1}).then(res => {                    
-                    res.code === 200 && (setCount(res.data))
-                })
-                break
-            default: 
-                break
-        }
+        if(JSON.stringify(userInfo) !== "{}") {
+            switch(type) {
+                case 'like':
+                    updateUserAction({actionLike: actions.likes? 0 : 1, articleId: data.articleId, actionUserId: userInfo.userId}).then(res => {                    
+                        res.code === 200 && ( setActions(res.data) )
+                    })
+                    updateArticleAction({articleId: data.articleId, articleLikes: actions.likes? count.likes - 1 : count.likes + 1}).then(res => {                    
+                        res.code === 200 && (setCount(res.data))
+                    })
+                    break
+                case 'collect':
+                    updateUserAction({actionCollect: actions.collects? 0 : 1, articleId: data.articleId, actionUserId: userInfo.userId}).then(res => {                    
+                        res.code === 200 && ( setActions(res.data) )
+                    })
+                    updateArticleAction({articleId: data.articleId, articleCollects: actions.collects? count.collects - 1 : count.collects + 1}).then(res => {                    
+                        res.code === 200 && (setCount(res.data))
+                    })
+                    break
+                case 'love':
+                    updateUserAction({actionLove: actions.loves? 0 : 1, articleId: data.articleId, actionUserId: userInfo.userId}).then(res => {                    
+                        res.code === 200 && ( setActions(res.data) )
+                    })
+                    updateArticleAction({articleId: data.articleId, articleLoves: actions.loves? count.loves - 1 : count.loves + 1}).then(res => {                    
+                        res.code === 200 && (setCount(res.data))
+                    })
+                    break
+                default: 
+                    break
+            }
+        } else {
+            Message.error('请先登录再操作!')
+        }        
     }
     return (
         <div className={style['action']} style={{display: load? 'block' : 'none'}}>
