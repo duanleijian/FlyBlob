@@ -11,6 +11,7 @@ const app = dva({history: createHistory()});
 app.model(keyword);
 app.router(props => <App {...props} />);
 app.start('#root');
+document.title = "飞识技术分享"
 // ReactDOM.render(
 //   <React.StrictMode>
 //     <App />

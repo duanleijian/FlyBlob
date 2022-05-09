@@ -1,5 +1,7 @@
 @import '../../common/style.scss';
+@import url('http://cdn.repository.webfont.com/webfonts/nomal/138697/45803/6278e7b5f629d803ecabf94d.css');
 .top-header {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -8,6 +10,14 @@
     height: 60px;
     background-color: #fff;
     border-bottom: 1px solid #eee;
+    &_logo {
+        position: absolute;
+        left: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 35px;
+        color: $theme-color;
+    }
     .create-article {
         padding: 0 15px;
         box-sizing: border-box;

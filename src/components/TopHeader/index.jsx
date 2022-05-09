@@ -26,6 +26,9 @@ export default function TopHeader(props) {
     }
     return (
         <div className='top-header'>
+            <div className='top-header_logo'>
+                <span class="css2f4d7265f221dc9">飞识</span>
+            </div>
             <TopTabs/>
             <Search content={content}/>
             <div className='create-article' onClick={editArticle}>
