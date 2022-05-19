@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import style from './index.module.scss'
 import PropTypes from 'prop-types'
 export default function Modal(props) {
-    let { open, title, classes, maskClose, btnClose, onCancel, onConfirm, onClose, openChange, openText, cancalText, children } = props
+    let { open, title, classes, maskClose, btnClose, onCancel, onConfirm, onClose, openChange, openText, cancalText, children, height } = props
     const [show, setShow] = useState(open)
     useEffect(() => {        
         setShow(open)
@@ -27,7 +27,7 @@ export default function Modal(props) {
                         <span className='iconfont icon-guanbi'></span>
                     </div>
                 </div>
-                <div className={style['modal-box_cont']}>{children}</div>
+                <div className={style['modal-box_cont']} style={{height}}>{children}</div>
                 {!btnClose ? <div className={style['modal-box_footer']}>
                     <div className={style['modal-box_footer__cancel']} onClick={onCancel}>{cancalText}</div>
                     <div className={style['modal-box_footer__ok']} onClick={onConfirm}>{openText}</div>
@@ -40,6 +40,7 @@ export default function Modal(props) {
 Modal.propTypes = {
     open: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     classes: PropTypes.string,
     maskClose: PropTypes.bool,
     btnClose: PropTypes.bool,
@@ -53,6 +54,7 @@ Modal.propTypes = {
 Modal.defaultProps = {
     open: false,
     title: '标题',
+    height: 'auto',
     classes: '',
     maskClose: false,
     btnClose: false,

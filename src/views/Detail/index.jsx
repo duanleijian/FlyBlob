@@ -70,7 +70,7 @@ export default function ShowRich(props) {
     //     setEditorState(editorState)
     // }
     const toProfile = () => {
-        nav('/profile/0', {})
+        nav('/profile/0', {state: {curActive: "0"}})
     }
     const checkFollowStatus = (curDetail) => {
         if (hasToken()) {

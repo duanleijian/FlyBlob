@@ -90,3 +90,11 @@ export function updateArticleViews(id) {
     })
 }
 
+// 删除文章
+export function delArticle(id) {
+    return http({
+        url: `/article/${id}`,
+        method: 'delete'
+    })
+}
+

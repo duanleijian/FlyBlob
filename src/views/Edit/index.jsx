@@ -48,7 +48,7 @@ export default function Edit() {
         addArticle(data).then(res => {
             if (res.code === 200) {
                 Message.success('文章发布成功!')
-                nav(`/profile/1`, {})
+                nav(`/profile/1`, {state: {curActive: "1"}})
             } else {
                 Message.error('文章发布失败:' + res.msg)
             }
