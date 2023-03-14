@@ -1,0 +1,17 @@
+
+.separate {
+    position: relative;
+    width: 12px;
+    
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        background-color: #86909c;
+    }
+}

@@ -6,14 +6,12 @@ import classnames from 'classnames'
 import style from './index.module.scss'
 import { dateToText } from '@/utils/date'
 import { throttle } from '@/utils/util'
-import Constant from '@/constant/constant'
-import Pubsub from 'pubsub-js'
 import NoData from '@/components/NoData'
 import DateSelect from '@/components/DateSelect'
 import Loading  from '@/components/Loading'
 import { getSearchArticles } from '@/api/article'
 function QueryList(props) {    
-    let { tabs, dispatch, keyword } = props
+    let { tabs, keyword } = props
     let location = useLocation()        
     const nav = useNavigate()
     const [load, setLoad] = useState(false)

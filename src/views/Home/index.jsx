@@ -1,10 +1,9 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import ArticleList from './ArticleList'
-import { useLocation } from 'react-router-dom'
 export default function Home() {		
 	return (
 		<Fragment>			
-			<ArticleList />			
+			<ArticleList />	
 		</Fragment>
 	)
 }

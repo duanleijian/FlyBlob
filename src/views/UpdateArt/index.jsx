@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import style from './index.module.scss'
 import { getUser } from '@/utils/auth'
 import { updateArticle } from '@/api/article'
-import RichText from '@/components/RichText'
+import RichEditor from '@/components/RichEditor'
 import Message from '@/components/Message'
 export default function UpdateArt() {
     const nav = useNavigate()
@@ -31,25 +31,34 @@ export default function UpdateArt() {
         const curVal = e.target.value
         setForm({...form, articleTitle: curVal}) 
     }
-    const getContent = (payload) => {                       
-        let data = null                
-        payload.mode.includes('html') && ( data = {...form, articleContent: payload.content, userId: userInfo.userId, articleTip: payload.text} )
+    const getContent = () => {             
+        let uuid = new Date().getTime()          
+        let data = {...form, userId: userInfo.userId}               
         setForm(data)
         updateArticle(data).then(res => {
             if (res.code === 200) {
                 Message.success('文章更新成功!')
-                nav(`/profile/${1}`, {state: {curActive: "1"}})
+                nav(`/profile/${1}?no=${uuid}`, {state: {curActive: "1"}})
             } else {
                 Message.error('文章更新失败:' + res.msg)
             }
         })        
     } 
+
+    const setText = (payload) => {
+        setForm({...form, articleContent: payload.content, articleTip: payload.text})
+    }
+
     return (
         <div className={style['update-art']}>
             <div className={style['update-art_title']}>
                 <input className={style['update-art_title__input']} type="text" placeholder='填写文章标题' value={form.articleTitle} onChange={titleChange}/>
             </div>
-            {form.articleContent? <RichText sendContent={getContent} html={form.articleContent}/> : ''}            
+            {form.articleContent? <RichEditor getText={setText} html={form.articleContent} readOnly={false}/> : ''}     
+            <div className={style['update-btn']} onClick={getContent}>
+                <span className='iconfont icon-bianji'></span>
+                <div className={style['update-btn__text']} >更新</div>
+            </div>       
         </div>
     )
 }

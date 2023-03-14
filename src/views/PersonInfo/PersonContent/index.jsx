@@ -5,7 +5,7 @@ import style from './index.module.scss'
 export default function PersonContent(props) {
     let { width, height, top, left } = props
     return (
-        <div className={style['person-content']} style={{width, height, marginLeft: left, marginTop: top}}>
+        <div className={style['person-content']} style={{width, minHeight: height, marginLeft: left, marginTop: top}}>
             <Outlet />
         </div>
     )

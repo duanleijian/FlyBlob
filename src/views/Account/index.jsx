@@ -6,7 +6,6 @@ import Message from '@/components/Message'
 import { get, set, remove} from '@/utils/cookie'
 import { login, register, getUser } from '@/api/user'
 import { setToken, setUser } from '@/utils/auth'
-import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function Account() {    
     const nav = useNavigate()
     const [cursor, setCursor] = useState(0)

@@ -1,6 +1,9 @@
-
+@import '@/common/style.scss';
 .edit {
-    margin: 30px auto;
+    position: relative;
+    margin: 30px auto 0 auto;
+    display: flex;
+    flex-direction: column;
     width: 50vw;
     min-height: 85vh;
     max-height: auto;
@@ -20,4 +23,49 @@
             color: #999;
         }
     }
+
+    &-content {
+        flex-grow: 1;
+    }
+
+    &-publish {
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: -80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-shadow: $theme-shadow1;                
+        background-color: #fff;
+        transition: background-color 0.3s 0s ease-in-out;
+        
+    
+        span {
+            color: $theme-blue-color1;
+            font-size: 23px;
+            transition: color 0.3s 0s ease-in-out;
+        }
+    
+        &__text {
+            margin-top: 5px;
+            font-size: 12px;
+            color: $theme-blue-color1;
+            transition: color 0.3s 0s ease-in-out;
+        }
+    }
+
+    &-publish:hover {
+        background-color: $theme-color;
+    }
+
+    &-publish:hover span,
+    &-publish:hover &-publish__text {
+        color: #fff !important;
+    }
 }
+

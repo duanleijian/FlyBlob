@@ -26,6 +26,10 @@ const routes = [
                 element: lazyLoad(() => import('@/views/PersonInfo/index'), { title: '编辑个人资料' }),
                 children: [
                     {
+                        path: 'datacenter',
+                        element: lazyLoad(() => import('@/views/PersonInfo/DataCenter/index'))
+                    },
+                    {
                         path: 'myinfo',
                         element: lazyLoad(() => import('@/views/PersonInfo/MyInfo/index'), {}),
                     },

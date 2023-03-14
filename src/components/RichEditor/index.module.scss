@@ -1,0 +1,24 @@
+
+.rich-editor {
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+.rich-container {
+    height: 100%;
+}
+
+
+/* 
+*  修改媒体弹框默认样式
+*/
+:global(.braft-finder .bf-manager-footer .button-cancel) {
+    font-weight: normal;
+}
+
+:global(.braft-finder .bf-manager-footer .button-insert) {
+    font-weight: normal;
+    background-color: green;
+}

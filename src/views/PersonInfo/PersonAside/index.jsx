@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
@@ -39,5 +39,10 @@ PersonAside.defaultProps = {
     height: 'auto',
     top: 'auto',
     left: 'auto',
-    asideList: [{icon: 'icon-gerenziliao', name: '个人资料', path: '/person/myinfo'}, {icon: 'icon-group52', name: '账号设置', path: '/person/account'}]
+    asideList: [
+        {icon: 'icon-shujuzhongxin', name: '数据中心', path: '/person/datacenter'},
+        {icon: 'icon-gerenziliao', name: '个人资料', path: '/person/myinfo'},
+        {icon: 'icon-group52', name: '账号设置', path: '/person/account'},
+        
+    ]
 }

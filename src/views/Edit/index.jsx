@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import style from './index.module.scss'
 import { getToken } from '@/utils/auth'
 import { getUser } from '@/api/user'
 import { addArticle } from '@/api/article'
-import { html_encode } from '@/utils/encode'
-import RichText from '@/components/RichText'
+import RichEditor from '../../components/RichEditor'
 import Message from '@/components/Message'
+
 export default function Edit() {
-    let enableSubmit = false
     const nav = useNavigate()
     const ref = useRef()        
     const [form, setForm] = useState({
@@ -23,6 +22,7 @@ export default function Edit() {
         articleLoves: 0
     })
     const [userInfo, setUserInfo] = useState({})
+
     useEffect(() => {
         let token = getToken()
         if (token) {
@@ -33,17 +33,18 @@ export default function Edit() {
             nav('/account', {})
         }
     }, [])
+
     useEffect(() => {
         ref.current = form        
-    }, [form])    
+    }, [form])   
+
     const titleChange = (e) => {        
         const curVal = e.target.value
         setForm({...form, articleTitle: curVal}) 
     }
-    const getContent = (payload) => {                       
-        let data = null        
-        payload.mode.includes('json') && ( data = {...form, articleContent: html_encode(payload.content), userId: userInfo.userId} )                                                     
-        payload.mode.includes('html') && ( data = {...form, articleContent: payload.content, userId: userInfo.userId, articleTip: payload.text} )
+
+    const getContent = () => {                       
+        let data = {...form, userId: userInfo.userId}        
         setForm(data)
         addArticle(data).then(res => {
             if (res.code === 200) {
@@ -53,13 +54,27 @@ export default function Edit() {
                 Message.error('文章发布失败:' + res.msg)
             }
         })        
-    }    
+    } 
+    
+    const setText = (payload) => {
+        setForm({...form, articleContent: payload.content, articleTip: payload.text})
+    }
+
     return (
-        <div className={style['edit']}>
-            <div className={style['edit-title']}>
-                <input className={style['edit-title_input']} type="text" placeholder='填写文章标题' value={form.articleTitle} onChange={titleChange}/>
+        <Fragment>
+            <div className={style['edit']}>
+                <div className={style['edit-title']}>
+                    <input className={style['edit-title_input']} type="text" placeholder='填写文章标题' value={form.articleTitle} onChange={titleChange}/>
+                </div>
+                <div className={style['edit-content']}>
+                    <RichEditor getText={setText} readOnly={false}/>
+                </div>
+                <div className={style['edit-publish']} onClick={getContent}>
+                    <span className='iconfont icon-fabu'></span>
+                    <div className={style['edit-publish__text']}>发布</div>
+                </div>
             </div>
-            <RichText sendContent={getContent}/>           
-        </div>
+            
+        </Fragment>
     )
 }

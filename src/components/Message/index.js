@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react'
-import { createPortal } from 'react-dom'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
 import MessageCont from './MessageCont'
 import style from './index.module.scss'
@@ -7,7 +6,6 @@ let notification = null
 class Message extends Component {
     msgNo = 0
     state = {doms: []}
-    // domBox = null    
     getUuid() {
         return "notification-" + new Date().getTime() + "-" + this.msgNo++;
     }
@@ -41,24 +39,27 @@ Message.getNewNotification = () => {
         return notification
     }
 }
-Message.getNewNotification()
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {    
-    success: (content) => {                                       
+    success: (content) => { 
+        Message.getNewNotification()  
         let uuid = notification.getUuid()
         notification.add(uuid, 'success', content)        
         setTimeout(() => {
             notification.remove(uuid)
         }, 3000);
     },
-    error: (content) => {        
+    error: (content) => {
+        Message.getNewNotification()
         let uuid = notification.getUuid()
         notification.add(uuid, 'error', content)
         setTimeout(() => {
             notification.remove(uuid)
         }, 3000);
     },
-    warn: (content) => {        
+    warn: (content) => { 
+        Message.getNewNotification()       
         let uuid = notification.getUuid()
         notification.add(uuid, 'warn', content)
         setTimeout(() => {

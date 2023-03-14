@@ -13,8 +13,8 @@ module.exports = function (app) {
   app.use(
     createProxyMiddleware("/api",{
       //配置转发目标地址(能返回数据的服务器地址)
-      // target: 'http://localhost:5000',
-      target: "http://175.24.165.205:5000", 
+      target: 'http://localhost:5000',
+      // target: "http://175.24.165.205:5000", 
       changeOrigin: true, //控制服务器接收到的请求头中host字段的值
       pathRewrite: { "^/api": "" }
     })    

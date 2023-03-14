@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
 import { getAuthorCounts } from '@/api/user'
-import { getUser } from '@/utils/auth'
 import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function Author(props) {    
     const { UserInfo } = props    

@@ -1,4 +1,14 @@
 import http from './http.js'
+
+// 获取近一周文章列表
+export function getArticleWeek(query) {
+    return http({
+        url: '/article/week/list',
+        method: 'get',
+        params: query
+    })
+}
+
 // 获取文章列表
 export function getArticleList(query) {
     return http({

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import './index.scss'
 import { getStrLen } from '@/utils/util'
 import { getRecArticles } from '@/api/article'
 import Loading from '@/components/Loading'
-export default function Articles() {
+export default function Articles({ setArticleCount }) {
 	const nav = useNavigate()
 	const [load, setLoad] = useState(false)
 	const [articles, setArticles] = useState([])
@@ -15,8 +16,9 @@ export default function Articles() {
 	const fetchData = () => {
 		setLoad(true)
 		getRecArticles().then(res => {
-			setLoad(false)			
+			setLoad(false)
 			res.code === 200 && (setArticles(res.data))
+			setArticleCount(res.data?.length > 7? 7 : res.data?.length)
 		})
 	}
 	const toDetail = (id) => {
@@ -36,4 +38,12 @@ export default function Articles() {
 
 		</div>
 	)
+}
+
+Articles.propTypes = {
+	setArticleCount: PropTypes.func
+}
+
+Articles.defaultProps = {
+	setArticleCount: () => {}
 }

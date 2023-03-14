@@ -1,0 +1,165 @@
+@import '@/common/style.scss';
+.data {
+    
+
+    &-sub {
+        padding: 20px 20px;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        color: #1d2129;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    &-overview {
+        padding: 20px 0 0 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        &__item {
+            margin-right: 20px;
+            margin-bottom: 20px;
+            padding: 16px 20px;
+            box-sizing: border-box;
+            display: flex;
+            width: calc((100% - 60px) / 3);
+            height: 90px;
+            flex-direction: column;
+            background: #f7f8fa;
+
+            &___sub {
+                color: #4e5969;
+                font-size: 14px;
+                line-height: 22px;
+            }
+
+            &___count {
+                color: #1d2129;
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 42px;
+            }
+        }
+    }
+
+    &-articles {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+
+        &__item {
+            position: relative;
+            cursor: pointer;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+            
+            &::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                transform: translateX(-50%);
+                width: calc(100% - 30px);
+                height: 1px;
+                background-color: #e5e6eb;
+                
+            }
+                    
+
+            &___title {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                color: #1d2129;
+            }
+
+            &___date {
+                margin-top: 5px;
+                font-weight: 400;
+                font-size: 14px;
+                height: 22px;
+                line-height: 22px;
+                display: flex;
+                align-items: center;
+                color: #86909c;
+            }
+
+            &___actions {
+                position: relative;
+                cursor: pointer;
+                padding: 6px 2px;
+                box-sizing: border-box;
+                position: absolute;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 30px;                
+                border-radius: 50%;
+
+                i {
+                    font-size: 22px;
+                    color: #4e5969;
+                }
+
+                &:hover {
+                    background-color: #e5e6eb !important;
+                }
+
+                &:hover span {
+                    color: $theme-color; 
+                }
+
+                &____menu {
+                    display: none;
+                    padding: 10px;                    
+                    position: absolute;
+                    right: 0;
+                    transform: translateX(40%);
+                    top: -37px;
+                    width: 130px;                                       
+                    flex-direction: row;
+                    justify-content: space-around;
+                    border-radius: 4px;
+                    box-shadow: 0 0 10px 2px rgba(0, 0%, 0%, 0.1);   
+                    transition: background-color 0.2s ease-in-out 0s;
+                    background-color: transparent;
+
+                    &_____edit,
+                    &_____remove {
+                        font-size: 14px;                        
+                        span:last-child {
+                            margin-left: 3px;
+                        }
+                    }
+
+                    &_____edit span {
+                        color: #1E80FF !important;
+                    } 
+
+                    &_____remove span {
+                        color: #FF3030 !important;
+                    }
+                }
+
+                &:hover &____menu {
+                    display: flex; 
+                    background-color: #fff;
+                }
+            }
+        }
+        
+        &__item:hover {
+            background-color: #fafafa !important;
+        }
+    }
+}

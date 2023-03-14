@@ -6,8 +6,7 @@ import './common/icon/iconfont.css'
 import RouterNavigate from '@/router/index.jsx'
 import NotFound from '@/views/NotFound';
 import Loading from '@/components/Loading';
-function App(props) {
-	let { dispatch, keyword } = props	
+function App() {
 	return (
 		<div className="App">
 			<HashRouter>
