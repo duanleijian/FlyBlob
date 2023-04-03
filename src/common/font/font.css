@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "云峰寒蝉体"; /* Project id 3201549 */
+    src: url('./cloudfont.ttf?t=1678714775172') format('truetype');
+}
+
+.cloudfont {
+    font-family: "云峰寒蝉体" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

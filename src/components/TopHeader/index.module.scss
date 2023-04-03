@@ -1,0 +1,41 @@
+@import '../../common/style.scss';
+@import '../../common/font/font.css';
+.top-header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+
+    &_logo {
+        position: absolute;
+        left: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+        
+        &__text {
+            color: $theme-color;
+            font-size: 40px;
+            font-family: '云峰寒蝉体';
+        }
+    }
+
+    .create-article {
+        padding: 0 15px;
+        box-sizing: border-box;
+        cursor: pointer;
+        margin-left: 30px;        
+        display: flex;
+        flex-direction: row;        
+        align-items: center;        
+        height: 35px;
+        border-radius: 100px;
+        color: #fff;
+        background-color: #fff;        
+        background-color: $theme-color;        
+    }
+}

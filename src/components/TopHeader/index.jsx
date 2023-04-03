@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import './index.scss'
+import style from './index.module.scss'
 import { getUser } from '@/utils/auth'
 import TopTabs from '@/components/TopTabs'
 import Search from '@/components/Search'
@@ -25,15 +25,15 @@ export default function TopHeader(props) {
         }        
     }
     return (
-        <div className='top-header'>
-            <div className='top-header_logo'>
-                <span className='css350f6ba41421dc9'>飞识</span>
+        <div className={style['top-header']}>
+            <div className={style['top-header_logo']}>
+                <span className={style['top-header_logo__text']}>飞识</span>
             </div>
             <TopTabs/>
             <Search content={content}/>
-            <div className='create-article' onClick={editArticle}>
+            <div className={style['create-article']} onClick={editArticle}>
                 <span className='iconfont icon-yongyan'></span>
-                <span className='create-article_text'>写博文</span>
+                <span className={style['create-article_text']}>写博文</span>
             </div>
             <User enabledHttp={state? state['enableUser'] : false}/>
         </div>
