@@ -1,19 +1,26 @@
 
 const path = require('path')
 // 引入打包分析工具
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // 提高二次构建的速度
 const { whenProd, getPlugin, pluginByName } = require('@craco/craco')
 module.exports = {
+    // style: {
+    //     css: {
+    //         loaderOptions: {
+    //             url: false
+    //         }
+    //     }
+    // },
     webpack: {
         alias: {
-            '@': path.join(__dirname, 'src')
+            '@': path.join(__dirname, './src')
         },
         plugins: [
-            new BundleAnalyzerPlugin({
-                // analyzerMode: 'disabled', 
-                // generateStatsFile: true
-            })
+            // new BundleAnalyzerPlugin({
+            //     analyzerMode: 'disabled', 
+            //     generateStatsFile: true
+            // })
         ],
         configure: (webpackConfig) => {
             let cdn = {

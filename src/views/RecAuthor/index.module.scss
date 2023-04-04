@@ -8,6 +8,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
+
         &_item {
             cursor: pointer;
             margin-top: 80px;            
@@ -115,6 +116,14 @@
                     }
                 }
             }
-        }        
+        }
+        
+    }
+
+    &-list::after {
+        content: '';
+        margin-top: 80px;   
+        height: 10px;
+        width: 30%;
     }
 }
