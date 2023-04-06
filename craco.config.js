@@ -5,6 +5,9 @@ const path = require('path')
 // 提高二次构建的速度
 const { whenProd, getPlugin, pluginByName } = require('@craco/craco')
 module.exports = {
+    eslint: {
+        enable: false
+    },
     // style: {
     //     css: {
     //         loaderOptions: {
