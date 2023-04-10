@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { handleTree } from '@/utils/tree'
 import Item from './Item'
 import Message from '@/components/Message'
-import CommentText from './CommentText'
 import { getUser, getToken } from '@/utils/auth'
 import { getCommentList, addComment } from '@/api/comment'
 import PubSub from 'pubsub-js'
@@ -61,7 +60,7 @@ export default function Comment(props) {
                 articleId: articleId,
                 commentParentId: null,
             }
-            setForm(commentForm)
+            setForm({ ...form, ...commentForm })
             setText('')            
             addComment(commentForm).then(res => {
                 if (res.code === 200) {

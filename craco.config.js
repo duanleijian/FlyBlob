@@ -1,30 +1,37 @@
 
 const path = require('path')
 // 引入打包分析工具
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // 提高二次构建的速度
-const { whenProd, getPlugin, pluginByName } = require('@craco/craco')
+const { whenProd, whenDev, getPlugin, pluginByName } = require('@craco/craco');
+const getMode = () => {
+    let mode = ''
+    whenDev(() => mode = 'development')
+    whenProd(() => mode = 'production')
+    return mode
+}
+const isDev = getMode() === 'development'
+const getEslintOptions = () => {
+    const options = {
+        enable: false,
+    }
+    isDev && (options.enable = true)
+    !isDev && (options.enable = false)
+    return options
+}
+
+
 module.exports = {
     eslint: {
-        enable: false
+        ...getEslintOptions()
     },
-    // style: {
-    //     css: {
-    //         loaderOptions: {
-    //             url: false
-    //         }
-    //     }
-    // },
     webpack: {
         alias: {
             '@': path.join(__dirname, './src')
         },
         plugins: [
-            // new BundleAnalyzerPlugin({
-            //     analyzerMode: 'disabled', 
-            //     generateStatsFile: true
-            // })
-        ],
+            isDev? new BundleAnalyzerPlugin({}) : null
+        ].filter(plugin => plugin),
         configure: (webpackConfig) => {
             let cdn = {
                 js: [],

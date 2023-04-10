@@ -1,5 +1,3 @@
-import { func } from "prop-types"
-
 const tokenKey = window.location.hostname +  window.location.port + 'dlj'
 const userKey = 'UNIQUE_DUAN_LEI_JIAN'
 export function getToken() {

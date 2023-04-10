@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { connect } from 'dva'
 import Separate from '@/components/Separate/index.jsx'
 import Message from '@/components/Message'
 import Modal from '@/components/Modal'
+import NoData from '@/components/NoData'
 import { getUser } from '@/utils/auth'
 import style from './index.module.scss'
 import { dateFormat } from '@/utils/date'
@@ -11,9 +13,9 @@ import { getAuthorCount } from '@/api/action'
 import { getArticleWeek } from '@/api/article'
 
 
-export default function DataCenter() {
+function DataCenter({ curAuthor }) {
     const nav = useNavigate()
-    const [user, setUser] = useState(null)
+    const [user, setUserInfo] = useState(null)
     const [artId, setArtId] = useState(0)
     const [open, setOpen] = useState(false)
     const [overviews, setOverviews] = useState([
@@ -46,20 +48,28 @@ export default function DataCenter() {
     const [articles, setArticles] = useState([])
    
     useEffect(() => {
-        const user = getUser()
-        user && setUser(user)
-        getAuthorCount(user.userId).then(res => {
-            let newOverviews = overviews.concat()
-            newOverviews = newOverviews.map((i) => {
-                res.data[i.column] && (i.count = res.data[i.column])
-                return i
+        let fetchData = null
+        if (curAuthor) {
+            setUserInfo(curAuthor)
+            fetchData = curAuthor
+        } else {
+            const user = getUser()
+            user && setUserInfo(user)
+            fetchData = user
+        }
+        if (fetchData) {
+            getAuthorCount(fetchData.userId).then(res => {
+                let newOverviews = overviews.concat()
+                newOverviews = newOverviews.map((i) => {
+                    res.data[i.column] && (i.count = res.data[i.column])
+                    return i
+                })
+                setOverviews(newOverviews)
             })
-            setOverviews(newOverviews)
-        })
-        getArticleWeek({ userId: user.userId }).then(res => {
-            res.code === 200 && setArticles(res.data)
-            console.log('getArticleWeek', res);
-        })
+            getArticleWeek({ userId: fetchData.userId }).then(res => {
+                res.code === 200 && setArticles(res.data)
+            })
+        }
     }, [])
 
     const removeDetail = () => {
@@ -78,7 +88,6 @@ export default function DataCenter() {
 	}
 
     const toEdit = (detail) => {
-        console.log('toEdit', detail);
         nav('/update', {state: {detail}})
     }
 
@@ -101,8 +110,9 @@ export default function DataCenter() {
             <div className={style['data-sub']}>近期发布</div>
             <div className={style['data-articles']}>
                 {
-                    articles.map(i => {
-                        return  <div className={style['data-articles__item']} key={i.articleId} onClick={() => { toDetail(i.articleId) }}>
+                    articles.length
+                    ? articles.map((i, cur) => {
+                        return  <div className={style['data-articles__item']} key={i.articleId || cur} onClick={() => { toDetail(i.articleId) }}>
                                     <div className={style['data-articles__item___title']}>{ i.articleTitle }</div>
                                     <div className={style['data-articles__item___date']}>{ dateFormat(i.articleDate) } | { i.articleViews }阅读<Separate/>{ i.articleComments }评论<Separate/>{ i.articleLikes }<Separate/>点赞</div>
                                     <div className={style['data-articles__item___actions']} onClick={e => e.stopPropagation()}>
@@ -120,6 +130,7 @@ export default function DataCenter() {
                                     </div>
                                 </div>
                     })
+                    : <NoData />
                 }
                 
             </div>
@@ -129,3 +140,9 @@ export default function DataCenter() {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    const { user: { curUser, curAuthor } } = state
+    return { curUser, curAuthor }
+}
+export default connect(mapStateToProps)(DataCenter);

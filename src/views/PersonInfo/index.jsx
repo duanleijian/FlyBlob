@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './index.module.scss'
+import { connect } from 'dva'
 import PersonAside from './PersonAside'
 import PersonContent from './PersonContent'
-export default function PersonInfo() {
+import { emit } from '@/utils/connect'
+import { EmitterEvent } from '@/utils/connect/enum'
+
+function PersonInfo({ setCurAuthor }) {
+    useEffect(() => {
+        return () => {
+            setCurAuthor(null)
+            emit(EmitterEvent.SET_AUTHOR_EMPTY, null)
+            console.log('卸载');
+        }
+    }, [])
     return (
         <div className={style['person-info']}>            
             <div className={style['person-info_cont']}>
@@ -12,3 +23,13 @@ export default function PersonInfo() {
         </div>
     )
 }
+const mapStateToProps = (state) => {
+    const { user: {curAuthor } } = state
+    return { curAuthor }
+}
+const mapDispatchToProps = (dispatch) => ({
+	setCurAuthor(author) {
+		dispatch({ type: 'user/updateAuthor', payload: { author }})
+	}
+})
+export default connect(mapStateToProps, mapDispatchToProps)(PersonInfo);

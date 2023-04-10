@@ -1,13 +1,22 @@
-import React, { lazy } from 'react'
+import React, { Fragment, lazy, Suspense } from 'react'
+import Person from '@/views/PersonInfo/index'
+import Loading from '@/components/Loading'
 // 组件懒加载
 const lazyLoad = (func, meta) => {
     const Element = lazy(func)
-    return <Element meta={meta} />
+    return <Suspense fallback={<Loading boxWidth="100vw" boxHeight="100vh" loadName="页面跳转中..."/>}>
+                <Element meta={meta} />
+            </Suspense>
+}
+const Load = (Element, meta) => {
+    return  <Fragment>
+                <Element meta={meta}/>
+            </Fragment>
 }
 const routes = [
     {
         path: '/',
-        element: lazyLoad(() => import('@/views/index'), { title: '首页' }),                
+        element: lazyLoad(() => import('@/views/index'), { title: '首页' }),   
         children: [
             {
                 path: 'home',
@@ -23,7 +32,7 @@ const routes = [
             },
             {
                 path: 'person',
-                element: lazyLoad(() => import('@/views/PersonInfo/index'), { title: '编辑个人资料' }),
+                element: Load(Person, { title: '编辑个人资料' }),
                 children: [
                     {
                         path: 'datacenter',

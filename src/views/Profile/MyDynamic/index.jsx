@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import style from './index.module.scss'
 import classname from 'classnames'
 import PropTypes from 'prop-types'
 import { dateFormat } from '@/utils/date'
 import { getUser, setUser } from '@/utils/auth'
-import { addConcat, updateUserRelate } from '@/api/user'
+import { addConcat } from '@/api/user'
 import { getArticlesByAction } from '@/api/article'
 import NoData from '@/components/NoData'
 import FollowBtn from '@/components/FollowBtn'
 import Message from '@/components/Message'
 import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function MyDynamic({ author }) {  
-    let followBtn = useRef()   
     const [userInfo, setUserInfo] = useState({})
     const [list, setList] = useState([])
     useEffect(() => {
@@ -34,8 +33,6 @@ export default function MyDynamic({ author }) {
         }
     }
     const toggleFollow = (targetId, curfollow) => {
-        let curUserRelate = getUser()['userRelate'].split(',')
-        let curUserId =  getUser()['userId']
         if(!curfollow) {                
             let curIds = userInfo.userRelate? `${userInfo.userRelate},${targetId}` : `${targetId}`                                                       
             userInfo.userRelate = curIds

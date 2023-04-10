@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import style from './index.module.scss'
 import Message from '@/components/Message'
 import { uploadUserAvatar } from '@/api/user'
 import { setUser, getUser } from '@/utils/auth'
 export default function AvatarUpload() {
-    let fileEl = null, userEl = null, formEl = null
+    let fileEl = null
     const [userInfo, setUserInfo] = useState({})
     const [isUpload, setIsUpload] = useState(false)
     const [curPhoto, setCurPhoto] = useState(require('@/common/images/default_avatar.png'))
@@ -40,7 +39,6 @@ export default function AvatarUpload() {
                 <input ref={(e) => { fileEl = e} } type="file" multiple="multiple" name="avatar" style={{display: 'none'}} onChange={(e) => { fileChange(e) }}/>                
                 <div className={style['avatar-upload_area']}>
                     {curPhoto? <img className={style['avatar-upload_area__avatar']} src={!isUpload? (userInfo.userAvatar? '/api' + userInfo.userAvatar : curPhoto) : (curPhoto)} onError={fileError} alt=""/> : ''}                    
-                    {/* <img className={style['avatar-upload_area__avatar']} src={userInfo.userAvatar? '/api' + userInfo.userAvatar : curPhoto} onError={fileError} alt=""/> */}
                     <div className={style['avatar-upload_area__mask']} onClick={selectFile}>
                         <span className='iconfont icon-camera'></span>
                     </div>                
@@ -48,9 +46,4 @@ export default function AvatarUpload() {
         </div>
     )
 }
-AvatarUpload.propTypes = {
-    
-}
-AvatarUpload.defaultProps = {
 
-}

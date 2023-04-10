@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import style from './index.module.scss'
 import FormInput from '../FormInput'
 import FormText from '../FormText'
+import { connect } from 'dva'
 import { getToken } from '@/utils/auth'
 import { getUser, updateUser } from '@/api/user'
 import Message from '@/components/Message'
-export default function MyInfo() {
+
+function MyInfo({ curAuthor }) {
 	const [form, setForm] = useState({ 
 		userId: undefined,
 		userNickName: undefined,				
@@ -17,19 +19,23 @@ export default function MyInfo() {
 		userIntroduct: undefined 
 	})	
 	useEffect(() => {
-		let token = getToken()
-		getUser(token).then(res => {									
-			res.code === 200 && (setForm({
-				userId: res.data[0].userId,
-				userNickName: res.data[0].userNickName,
-				userOrgnName: res.data[0].userOrgnName,
-				userAddress: res.data[0].userAddress,
-				userPosition: res.data[0].userPosition,
-				userEmail: res.data[0].userEmail,
-				userMajor: res.data[0].userMajor,
-				userIntroduct: res.data[0].userIntroduct,
-			}))			
-		})
+		if (curAuthor) {
+			setForm({ ...curAuthor })
+		} else {
+			let token = getToken()
+			getUser(token).then(res => {									
+				res.code === 200 && (setForm({
+					userId: res.data[0].userId,
+					userNickName: res.data[0].userNickName,
+					userOrgnName: res.data[0].userOrgnName,
+					userAddress: res.data[0].userAddress,
+					userPosition: res.data[0].userPosition,
+					userEmail: res.data[0].userEmail,
+					userMajor: res.data[0].userMajor,
+					userIntroduct: res.data[0].userIntroduct,
+				}))			
+			})
+		}
 	}, [])	
 	const getInputVal = (data) => {		
 		setForm({ ...form, [data.key]: data.val })						
@@ -54,3 +60,8 @@ export default function MyInfo() {
 		</div>
 	)
 }
+const mapStateToProps = (state) => {
+    const { user: { curUser, curAuthor } } = state
+    return { curUser, curAuthor }
+}
+export default connect(mapStateToProps)(MyInfo);

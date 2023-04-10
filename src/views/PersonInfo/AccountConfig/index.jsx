@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
 import style from './index.module.scss'
 import FormTitle from '../FormTitle'
 import Modal from '@/components/Modal'
 import Message from '@/components/Message'
+import { useLocation } from 'react-router-dom'
 import { getUser, setUser, setToken } from '@/utils/auth'
 import { sendEmail, verEmail, resetPassword } from '@/api/user'
-export default function AccountConfig() {
+function AccountConfig() {
     const [account, setAccount] = useState({userEmail: '', userPwd: ''})
     const [emailShow, setEmailShow] = useState(false)
     const [pwdShow, setPwdShow] = useState(false)
@@ -14,11 +14,17 @@ export default function AccountConfig() {
     const [code, setCode] = useState('')
     const [time, setTime] = useState(60)
     const [timeControl, setTimeControl] = useState(null)
-    const [editPwd, setEditPwd] = useState(false)
+    const [editPwd] = useState(false)
     const [password, setPassword] = useState('')
     const timeRef = useRef()    
+    const location = useLocation()
+    
     useEffect(() => {
-        getUser() && setAccount(getUser())
+        if (location?.state?.author) {
+            setAccount(location.state.author)
+        } else {
+            getUser() && setAccount(getUser())
+        }
     }, [])    
     useEffect(() => {              
         timeRef.current = {time}        
@@ -99,42 +105,24 @@ export default function AccountConfig() {
             <FormTitle title="社交账号"/>            
             <div className={style['account-config__tip']}>社交安全信息、认证信息</div>
             <div className={style['account-config_form']}>
-                {/* <div className={style['account-config_form__item']}>
-                    <div className={style['account-config_form__item___left']}>
-                        <span>手机号</span>
-                        <span>{account.phone}</span>                        
-                    </div>
-                    <div className={style['account-config_form__item___right']}>编辑</div>
-                </div> */}
                 <div className={style['account-config_form__item']}>
                     <div className={style['account-config_form__item___left']}>
                         <span>邮箱</span>
-                        <span>{account.userEmail}</span>                        
+                        <span>{account.userEmail? account.userEmail : '请绑定'}</span>                        
                     </div>
                     <div className={style['account-config_form__item___right']} onClick={toggleEmailShow}>编辑</div>
                 </div>
                 <div className={style['account-config_form__item']}>
                     <div className={style['account-config_form__item___left']}>
                         <span>密码</span>
-                        {/* <span>{account.userPwd}</span>                         */}
-                        <input className={style['account-config_form__item___pwd']} type="password" value={account.userPwd} disabled={!editPwd}/>
+                        {
+                            account.userPwd
+                            ? <input className={style['account-config_form__item___pwd']} type="password" value={account.userPwd} disabled={!editPwd}/>
+                            : <span>请输入</span>
+                        }
                     </div>
                     <div className={style['account-config_form__item___right']} onClick={toggleEditPwd}>编辑</div>
                 </div>
-                {/* <div className={style['account-config_form__item']}>
-                    <div className={style['account-config_form__item___left']}>
-                        <span>微信账号</span>
-                        <span>{account.wx}</span>                        
-                    </div>
-                    <div className={style['account-config_form__item___right']}>编辑</div>
-                </div>
-                <div className={style['account-config_form__item']}>
-                    <div className={style['account-config_form__item___left']}>
-                        <span>qq账号</span>
-                        <span>{account.qq}</span>                        
-                    </div>
-                    <div className={style['account-config_form__item___right']}>编辑</div>
-                </div> */}
             </div>
             <Modal open={emailShow} title="邮箱绑定" onClose={triggerClose} onConfirm={triggerConfirm} onCancel={triggerCancel}>
                 <div className={style['modal-content']}>
@@ -172,9 +160,5 @@ export default function AccountConfig() {
         </div>
     )
 }
-AccountConfig.propTypes = {
-    // configList: PropTypes.array
-}
-AccountConfig.defaultProps = {
-    // configList: [{label: ''}]
-}
+export default AccountConfig;
+

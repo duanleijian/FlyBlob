@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
 import { getUser } from '@/utils/auth'
@@ -10,11 +10,12 @@ export default function UserCard({ author }) {
     const [user, setUser] = useState({})
     const [counts, setCounts] = useState({articles: 0, collects: 0, fans: 0, follow: 0, likes: 0, loves: 0})
     useEffect(() => {                
-        if (author) {
-            setUser(author)
-        } else {
-            getUser() && setUser(getUser())            
-        }                        
+        // if (author) {
+        //     setUser(author)
+        // } else {
+                       
+        // }                        
+        getUser() && setUser(getUser())
     }, [])
     useEffect(() => {
         JSON.stringify(user) !== "{}" && fetchData()
@@ -25,7 +26,7 @@ export default function UserCard({ author }) {
         })
     }
     const editUserInfo = () => {        
-        nav('/person/account', {})
+        nav('/person/account', { state: { author } })
     }
     return (
         <div className={style['user-card']}>

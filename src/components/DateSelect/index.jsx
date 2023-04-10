@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classname from 'classnames'
 import style from './index.module.scss'
 import { dateRangle } from '@/utils/date'
 export default function DateSelect(props) {
-    let { options, current, value, top, left, right, width, sendSelect } = props
+    let { options, top, right, width, sendSelect } = props
     let [show, setShow] = useState(false)
     let [cont, setCont] = useState(options[0].label)
     let [val, setVal] = useState(options[0])

@@ -8,7 +8,7 @@ import { getUser } from '@/api/user'
 import { getToken, delToken, setUser, delUser } from '../../utils/auth'
 import Message from '@/components/Message'
 export default function User(props) {
-    let { menu, avatar, isLogin, enabledHttp } = props
+    let { menu, avatar, isLogin } = props
     let nav = useNavigate()
     let { pathname } = useLocation()
     let [userInfo, setUserInfo] = useState({ avatar })
@@ -75,7 +75,6 @@ export default function User(props) {
                             return <div key={index} className='user-menu_item' onClick={() => { runCase(item.name) }}>
                                 <span className={`iconfont ${item.icon}`}></span>
                                 <span className='user-menu_item_text'>{item.name}</span>
-                                {/* {item.count ? <div className='user-menu_item__count'>{item.count}</div> : ''} */}
                             </div>
                         })
                     }

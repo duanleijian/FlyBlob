@@ -4,13 +4,10 @@ import style from './index.module.scss'
 
 export default function MessageCont(props) {    
     const icons = {success: {icon: 'icon-Ok', color: 'green'}, error: {icon: 'icon-cuowu', color: 'red'}, warn: {icon: 'icon-a-gantanhao3x', color: 'yellow'}}
-    const { len, type, content, preTop } = props        
-    const [show, setShow] = useState(false)
+    const { type, content, preTop } = props        
     const [cssStyle, setCssStyle] = useState({})
     useEffect(() => {
         setTimeout(() => {
-            // let curTop = (len - 1) * 50
-            // setCssStyle({top: `calc(10% +  ${curTop}px)`, opacity: '1.0'})
             setCssStyle({top: preTop === 0? '10%' : `calc(${preTop + 60}px)`, opacity: '1.0'})
         }, 100)        
     }, [])

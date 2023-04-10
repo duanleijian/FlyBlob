@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
 import AvatarUpload from '@/components/AvatarUpload'
 export default function PersonAside(props) {
     let { width, height, top, left, asideList } = props
     const nav = useNavigate()
-    const toRirect = (path) => {        
-        nav(path, {})
+    const [active, setActive] = useState(asideList.length - 1)
+    const toRirect = (path, index) => {        
+        setActive(index)
+        nav(path)
     }
     return (
         <div className={style['person-aside']} style={{width, height, marginLeft: left, marginTop: top}}>
@@ -17,7 +20,7 @@ export default function PersonAside(props) {
             <div className={style['person-aside_list']}>
                 {
                     asideList.map((i, cur) => {
-                        return  <div key={cur} className={style['person-aside_list__item']} onClick={() => { toRirect(i.path) }}>
+                        return  <div key={cur} className={classnames(style['person-aside_list__item'], { [style['person-aside_list__item___active']] : active === cur })} onClick={() => { toRirect(i.path, cur) }}>
                                     <span className={`iconfont ${i.icon}`}></span>
                                     <span>{i.name}</span>
                                 </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import style from './index.module.scss'
 import PropTypes from 'prop-types'
 export default function Modal(props) {
-    let { open, title, classes, maskClose, btnClose, onCancel, onConfirm, onClose, openChange, openText, cancalText, children, height } = props
+    let { open, title, classes, btnClose, onCancel, onConfirm, onClose, openChange, openText, cancalText, children, height } = props
     const [show, setShow] = useState(open)
     useEffect(() => {        
         setShow(open)
@@ -10,9 +10,6 @@ export default function Modal(props) {
     useEffect(() => {
         openChange(show)
     }, [show])
-    const toggleShow = () => {
-        setShow(!show)
-    }
     const close = () => {
         setShow(false)
         onClose(false)

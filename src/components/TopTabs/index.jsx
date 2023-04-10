@@ -6,7 +6,7 @@ import './index.scss'
 function TopTabs(props) {
     const nav = useNavigate()
     const { pathname } = useLocation()
-    const { tabs, height } = props
+    const { tabs } = props
     const [cusror, setCursor] = useState(0)
     const [curTabs, setCurTabs] = useState(tabs)    
     useEffect(() => {

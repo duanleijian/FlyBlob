@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { connect } from 'dva'
 import PropTypes from 'prop-types'
-import Constant from '@/constant/constant'
-import Pubsub from 'pubsub-js'
 import './index.scss'
 function Search(props) {
-    let { pathname } = useLocation()
-    let { placeholder, content, dispatch, keyword } = props        
+    let { placeholder, content, dispatch } = props  
     let nav = useNavigate()
     let [tip, setTip] = useState(placeholder)
     let [keyVal, setKeyVal] = useState(content)
@@ -21,10 +18,6 @@ function Search(props) {
     }
     const redirect = () => {        
         dispatch({type: 'keyword/updateKeyWord', payload: {val: keyVal}})
-        // Pubsub.publish(Constant.ARTICLE_SEARCH, {})
-        // if (!pathname.includes('/search')) {
-            
-        // }
         nav(`/search?key=${keyVal}&redirect=${parseInt(Math.random() * 100000000000)}`)          
         
     }
@@ -52,4 +45,3 @@ Search.defaultProps = {
     placeholder: '搜索关键字'
 }
 export default connect(({ keyword }) => ({ keyword }))(Search);
-// export default Search;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import style from './index.module.scss'
@@ -9,9 +9,6 @@ function FollowBtn({ curUser, curUserId, width, click }) {
     useEffect(() => {               
         initFollowStatus()
     }, [])    
-    // useImperativeHandle(ref, () => ({
-    //     refreshStatus
-    // }))
     const refreshStatus = () => {                        
         initFollowStatus()
     }
@@ -35,8 +32,6 @@ function FollowBtn({ curUser, curUserId, width, click }) {
         </div>
     )
 }
-// FollowBtn = forwardRef(FollowBtn)
-// FollowBtn.displayName = "FollowBtn"
 FollowBtn.propTypes = {
     curUser: PropTypes.object,
     curUserId: PropTypes.number,
