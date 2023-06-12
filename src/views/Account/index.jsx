@@ -5,7 +5,7 @@ import style from './index.module.scss'
 import Message from '@/components/Message'
 import { get, set, remove} from '@/utils/cookie'
 import { login, register, getUser } from '@/api/user'
-import { setToken, setUser } from '@/utils/auth'
+import { setToken, setRefreshToken, setUser } from '@/utils/auth'
 export default function Account() {    
     const nav = useNavigate()
     const [cursor, setCursor] = useState(0)
@@ -29,7 +29,9 @@ export default function Account() {
     const confirmLogin = () => {
         login(form).then(res => {
             if (res.code === 200) {
-                setToken(res.data)
+                const { authToken, refreshToken } = res.data
+                authToken && setToken(authToken)
+                refreshToken && setRefreshToken(refreshToken)
                 getUser(res.data).then(result => {                                        
                     result.code === 200 && (setUser(result.data[0]))
                     result.code !== 200 && (Message.error('用户信息获取失败:' + result.msg))
@@ -42,7 +44,9 @@ export default function Account() {
     const confirmRegister = () => {
         register(form).then(res => {
             if (res.code === 200) {
-                setToken(res.data)
+                const { authToken, refreshToken } = res.data
+                authToken && setToken(authToken)
+                refreshToken && setRefreshToken(refreshToken)
                 getUser(res.data).then(result => {
                     result.code === 200 && (setUser(result.data[0]))
                     result.code !== 200 && (Message.error('用户信息获取失败:' + result.msg))

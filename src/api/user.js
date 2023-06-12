@@ -127,7 +127,7 @@ export function login(data) {
     return http({
         url: '/user/login',
         method: 'post',
-        data: data        
+        data        
     })
 }
 
@@ -136,7 +136,16 @@ export function register(data) {
     return http({
         url: '/user/register',
         method: 'post',
-        data: data    
+        data    
+    })
+}
+
+// 刷新token
+export function refreshAuthToken(data) {
+    return http({
+        url: '/user/refresh',
+        method: 'post',
+        data    
     })
 }
 

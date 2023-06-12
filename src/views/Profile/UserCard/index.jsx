@@ -10,11 +10,6 @@ export default function UserCard({ author }) {
     const [user, setUser] = useState({})
     const [counts, setCounts] = useState({articles: 0, collects: 0, fans: 0, follow: 0, likes: 0, loves: 0})
     useEffect(() => {                
-        // if (author) {
-        //     setUser(author)
-        // } else {
-                       
-        // }                        
         getUser() && setUser(getUser())
     }, [])
     useEffect(() => {
@@ -69,10 +64,14 @@ export default function UserCard({ author }) {
                     <span className={`${style['user-card_profile__left___icon']} iconfont icon-gerenziliao`}></span>
                     <span>个人信息</span>
                 </div>
-                <div className={style['user-card_profile__right']} onClick={editUserInfo}>
-                    <span>编辑个人资料</span>
-                    <span className={`${style['user-card_profile__left___icon']} iconfont icon-youjiantou`}></span>
-                </div>
+                {
+                    JSON.stringify(user) !== "{}"
+                    ?   <div className={style['user-card_profile__right']} onClick={editUserInfo}>
+                            <span>编辑个人资料</span>
+                            <span className={`${style['user-card_profile__left___icon']} iconfont icon-youjiantou`}></span>
+                        </div>
+                    : ''
+                }
             </div>
         </div>
     )

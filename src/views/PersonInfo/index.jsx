@@ -11,7 +11,6 @@ function PersonInfo({ setCurAuthor }) {
         return () => {
             setCurAuthor(null)
             emit(EmitterEvent.SET_AUTHOR_EMPTY, null)
-            console.log('卸载');
         }
     }, [])
     return (

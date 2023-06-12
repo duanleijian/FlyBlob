@@ -1,7 +1,7 @@
 
 const path = require('path')
 // 引入打包分析工具
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CompressionPlugin = require("compression-webpack-plugin");
 // 提高二次构建的速度
 const { whenProd, whenDev, getPlugin, pluginByName } = require('@craco/craco');
@@ -31,9 +31,9 @@ module.exports = {
             '@': path.join(__dirname, './src')
         },
         plugins: [
-            isDev? new BundleAnalyzerPlugin({}) : null,
+            // isDev? new BundleAnalyzerPlugin({}) : null,
             new CompressionPlugin({
-                test: /\.js$|\.css$|\.html$|\.json$/, // 对哪些资源进行压缩
+                test: /\.js$|\.css$|\.html$/, // 对哪些资源进行压缩
                 filename: "[path][base].gz",
                 threshold: 8192, // 超过多大的资源会被压缩，单位bytes
                 minRatio: 0.8, // 压缩过后体积减少到80%以下的文件会被压缩
