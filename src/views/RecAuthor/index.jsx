@@ -6,13 +6,16 @@ import { getUser, hasToken } from '@/utils/auth'
 import { getUsersAndArticles, addConcat } from '@/api/user'
 import defaultAvatar from  "@/common/images/default_avatar.png"
 import Message from '@/components/Message'
+import RecAuthorSkeleton from './skeleton.jsx'
 export default function RecAuthor() {    
-    const nav = useNavigate()    
+    const nav = useNavigate()
+    const [fetchData, setFetchData] = useState(false)
     const [user, setUser] = useState({})
     let [list, setList] = useState([])
     useEffect(() => {
         getUsersAndArticles().then(res => {            
             res.code === 200 && (setList(res.data))
+            setFetchData(true)
         })
         getUser() && (setUser(getUser()))
     }, [])
@@ -61,7 +64,10 @@ export default function RecAuthor() {
     }
     return (
         <div className={style['recauthor']}>
-            <div className={style['recauthor-list']}>
+            {
+                !fetchData
+                ? <RecAuthorSkeleton />
+                : <div className={style['recauthor-list']}>
                 {
                     list.map(i => {
                         return <div key={i.userId} className={style['recauthor-list_item']} onClick={() => { toAuthorDetail(i) }}>
@@ -88,7 +94,10 @@ export default function RecAuthor() {
                                 </div>
                     })
                 }
-            </div>
+                </div>
+                
+            }
+            
         </div>
     )
 }

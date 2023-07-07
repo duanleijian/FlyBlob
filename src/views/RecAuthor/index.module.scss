@@ -127,3 +127,21 @@
         width: 30%;
     }
 }
+
+.skeleton {
+    margin: 100px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 800px;
+    
+    &-item {
+        margin-bottom: 20px;
+        width: 220px;
+    }
+
+    // &-lines {
+    //     width: 100%;
+    // }
+}
