@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
@@ -6,12 +6,13 @@ import { getUser } from '@/utils/auth'
 import { updateArticleAction } from '@/api/article'
 import { getUserAction, updateUserAction } from '@/api/action'
 import Message from '@/components/Message'
-export default function Actions(props) {
+function Actions(props) {
     let { data } = props
     const [actions, setActions] = useState({likes: 0, loves: 0, collects: 0})
-    const [userInfo, setUserInfo] = useState({})
+    const [userInfo, setUserInfo] = useState(null)
     const [count, setCount] = useState({likes: 0, loves: 0, collects: 0})
     const [load, setLoad] = useState(false)
+    console.log('Actions render');      
     useEffect(() => {
         const user = getUser()
         user && setUserInfo(user)
@@ -93,3 +94,5 @@ Actions.propTypes = {
 Actions.defaultProps = {
     data: {}
 }
+
+export default memo(Actions)

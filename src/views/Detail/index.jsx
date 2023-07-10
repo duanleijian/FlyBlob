@@ -26,18 +26,19 @@ export default function ShowRich(props) {
     const [detail, setDetail] = useState({})
     const [userInfo, setUserInfo] = useState({})
     const [followStatus, setFollowStatus] = useState(false)
+    console.log('Detail render');
     useEffect(() => {              
         fetchDetail()
         getUser() && setUserInfo(getUser())
-    }, [location.key])    
-    const fetchDetail = () => {                       
+    }, [])    
+    const fetchDetail = () => {   
         let id = searchParams.get('id') || params['id'] || location.state.id                               
         getArticle(id).then(res => {
-            console.log('getArticle', res);
-            if(res.code === 200) {
+            if (res.code === 200) {
                 setDetail(res.data)                
-            }            
-            res.code !== 200 && (Message.error(`文章信息获取失败：${res.msg}`))
+            } else {
+                Message.error(`文章信息获取失败：${res.msg}`)
+            }           
             checkFollowStatus(res.data)
         })
         updateArticleViews(id)
@@ -120,7 +121,7 @@ export default function ShowRich(props) {
                 <div className={classnames(style['detail-cont_html'], 'braft-output-content')} dangerouslySetInnerHTML={{__html: detail.articleContent}} />
             </div>
             <div className={style['detail-aside']}>
-                <Author UserInfo={{ ...detail }}></Author>
+                <Author UserInfo={detail}></Author>
                 <RelevantArticle top="20px" article={detail}></RelevantArticle>
             </div>
             <Comment articleId={detail.articleId}/>

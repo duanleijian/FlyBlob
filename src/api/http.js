@@ -29,7 +29,7 @@ service.interceptors.request.use(config => {
 export default service
 // 响应拦截器
 service.interceptors.response.use(response => {
-	console.log('response', response);
+	// console.log('response', response);
 	// 未设置状态码则默认成功状态
 	const code = response.data.code || 200;
 

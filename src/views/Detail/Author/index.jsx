@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import style from './index.module.scss'
 import { getAuthorCounts } from '@/api/user'
 import defaultAvatar from  "@/common/images/default_avatar.png"
-export default function Author(props) {    
+function Author(props) {    
     const { UserInfo } = props    
     const [user, setUser] = useState({})
-    const [count, setCount] = useState({articles: 0, follows: 0, likes: 0})           
-    useEffect(() => {                     
-        setUser(() => {            
-            Object.keys(UserInfo).length && getCount()            
-            return UserInfo
-        })                                       
+    const [count, setCount] = useState({articles: 0, follows: 0, likes: 0}) 
+    console.log('Author render', UserInfo);      
+    
+    useEffect(() => {
+        Object.keys(UserInfo).length && getCount()
     }, [UserInfo])
-    const getCount = () => {
-        getAuthorCounts(UserInfo.userId).then(res => {
-            res.code === 200 && (setCount(res.data))
-        })                
+
+    const getCount = () => {        
+        if (UserInfo.userId)    {
+            getAuthorCounts(UserInfo.userId).then(res => {
+                res.code === 200 && (setCount(res.data))
+            })
+        }
     }
     return (
         <div className={style['author-card']}>
@@ -43,3 +45,4 @@ Author.propTypes = {
 Author.defaultProps = {
     UserInfo: {}
 }
+export default memo(Author)
