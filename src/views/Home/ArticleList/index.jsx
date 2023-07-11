@@ -13,7 +13,6 @@ export default function ArticleList() {
 		nav('/authors', {})
 	}
 	const setArticleCount = (count) => {
-		console.log('count', count)
 		setTip(`共${count}文章上榜`)
 	}
 	return (

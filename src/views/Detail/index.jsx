@@ -26,7 +26,6 @@ export default function ShowRich(props) {
     const [detail, setDetail] = useState({})
     const [userInfo, setUserInfo] = useState({})
     const [followStatus, setFollowStatus] = useState(false)
-    console.log('Detail render');
     useEffect(() => {              
         fetchDetail()
         getUser() && setUserInfo(getUser())
@@ -125,7 +124,7 @@ export default function ShowRich(props) {
                 <RelevantArticle top="20px" article={detail}></RelevantArticle>
             </div>
             <Comment articleId={detail.articleId}/>
-            <Actions data={detail}/>
+            <Actions actions={detail}/>
         </div>
     )
 }

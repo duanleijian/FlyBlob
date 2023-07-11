@@ -9,16 +9,17 @@ import { getCommentList, addComment } from '@/api/comment'
 import PubSub from 'pubsub-js'
 import defaultAvatar from  "@/common/images/default_avatar.png"
 export default function Comment(props) {
-
     let { top, articleId } = props    
-    const [text, setText] = useState('')
-    const [form, setForm] = useState({})
-    const [total, setTotal] = useState(0)
-    const [comments, setComments] = useState([])
-    const [userInfo, setUserInfo] = useState({})
     
+    const [data, setData] = useState({
+        text: '',
+        form: {},
+        total: 0,
+        comments: [],
+        userInfo: {}
+    })
     useEffect(() => {        
-        getToken() && ( setUserInfo(getUser()) )        
+        getToken() && ( setData({ ...data, userInfo: getUser() }) )
     }, [])
 
     useEffect(() => {
@@ -31,10 +32,9 @@ export default function Comment(props) {
     const fetchComment = (id) => {
         getCommentList(id).then(res => {
             if (res.code === 200) {
-                setTotal(res.data.length)
                 let comments = res.data.map(i => ({...i, children: []}))                
                 let result = handleTree(comments, null, 'commentParentId', 'commentId')                
-                setComments(result)
+                setData({ ...data, total: res.data.length, comments: result })
             } else {
                 Message.error('评论获取失败: ' + res.msg)
             }
@@ -43,25 +43,24 @@ export default function Comment(props) {
 
     const textChange = (e) => {
         let val = e.value || e.target.value
-        setText(val)
+        setData({ ...data, text: val })
     }
 
     const publishComment = () => {
         if (getToken()) {
             let commentForm = {
-                commentCreaterId: userInfo.userId,
-                commentCreater: userInfo.userNickName,
-                commentCreaterProd: userInfo.userIntroduct,
-                commentCreaterAvatar: userInfo.userAvatar,
+                commentCreaterId: data?.userInfo?.userId,
+                commentCreater: data?.userInfo?.userNickName,
+                commentCreaterProd: data?.userInfo?.userIntroduct,
+                commentCreaterAvatar: data?.userInfo?.userAvatar,
                 commentReceivcerId: null,
                 commentReceivcer: '',
                 commentReceivcerAvatar: '',
-                commentCont: text,
+                commentCont: data?.text,
                 articleId: articleId,
                 commentParentId: null,
             }
-            setForm({ ...form, ...commentForm })
-            setText('')            
+            setData({ ...data, text: '',  form: commentForm })            
             addComment(commentForm).then(res => {
                 if (res.code === 200) {
                     Message.success('评论发布成功！')
@@ -87,10 +86,10 @@ export default function Comment(props) {
                 <div className={style['comment-keyin_title']}>我的评论</div>
                 <div className={style['comment-keyin_cont']}>
                     <div className={style['comment-keyin_cont__avatar']}>
-                        <img src={userInfo.userAvatar ? '/api' + userInfo.userAvatar : defaultAvatar} alt="" />                        
+                        <img src={data?.userInfo.userAvatar ? '/api' + data?.userInfo.userAvatar : defaultAvatar} alt="" />                        
                     </div>
                     <div className={style['comment-keyin_cont__input']}>
-                        <textarea placeholder='请输入你的评论...' onChange={textChange} value={text}></textarea>
+                        <textarea placeholder='请输入你的评论...' onChange={textChange} value={data.text}></textarea>
                         <div className={style['comment-keyin_cont__input___action']}>
                             <button onClick={publishComment}>发表</button>
                         </div>
@@ -101,11 +100,11 @@ export default function Comment(props) {
                 articleId ? <CommentText data={{ commentReceivcerId: null, commentReceivcer: '', commentReceivcerAvatar: '', articleId: articleId, commentParentId: null}} enableReply={false}/> : ''
             }             */}
             <div className={style['comment-all']}>
-                <div className={style['comment-all_title']}>所有评论({total})</div>
+                <div className={style['comment-all_title']}>所有评论({data.total})</div>
             </div>
             <div className={style['comment-list']}>
                 {
-                    comments.map(i => {
+                    data.comments.map(i => {
                         return <Item key={i.commentId} data={i}/>
                     })
                 }

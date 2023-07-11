@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import style from './index.module.scss'
 import PropTypes from 'prop-types'
 import { getConcatArticles } from '@/api/article'
 import Loading from '@/components/Loading'
-export default function RelevantArticle(props) {
+function RelevantArticle(props) {
     let { top, article } = props
     const nav = useNavigate()
-    const [load, setLoad] = useState(false)
-    const [list, setList] = useState([])
+    const [data, setData] = useState({
+        load: false,
+        list: []
+    })
     useEffect(() => {        
         if (JSON.stringify(article) !== "{}") {
-            setLoad(true)
+            setData({ ...data, load: true })
             getConcatArticles(article.articleId).then(res => {                
-                setLoad(false)
-                res.code === 200 && (setList(res.data))
+                setData({ load: false, list: res.data })
             })
         }
     }, [article])
@@ -25,9 +26,9 @@ export default function RelevantArticle(props) {
         <div className={style['relevant-article']} style={{marginTop: top}}>
             <div className={style['relevant-article_header']}>相关文章</div>
             <div className={style['relevant-article_cont']}>
-                <Loading show={load} width="15%" loadType="bubbles" boxHeight="200px"/>
+                <Loading show={data.load} width="15%" loadType="bubbles" boxHeight="50px"/>
                 {
-                    list.slice(0, 5).map(i => {
+                    data.list.slice(0, 5).map(i => {
                         return  <div key={i.articleId} className={style['relevant-article_cont__item']} onClick={() => { toDetail(i.articleId) }}>
                                     <div className={style['relevant-article_cont__item___title']}>{i.articleTitle.length > 15? i.articleTitle.substr(0, 15) + '...' : i.articleTitle}</div>
                                     <div className={style['relevant-article_cont__item___counts']}>
@@ -53,3 +54,5 @@ RelevantArticle.defaultProps = {
     top: '0',
     article: {}
 }
+
+export default memo(RelevantArticle)

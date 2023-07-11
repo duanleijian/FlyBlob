@@ -7,7 +7,6 @@ function Author(props) {
     const { UserInfo } = props    
     const [user, setUser] = useState({})
     const [count, setCount] = useState({articles: 0, follows: 0, likes: 0}) 
-    console.log('Author render', UserInfo);      
     
     useEffect(() => {
         Object.keys(UserInfo).length && getCount()
